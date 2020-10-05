@@ -12,13 +12,12 @@
 <body onload="startGame()">
     <script>
 
-        var blocks = [], invblocks = [0, 0, 0, 0, 0, 0], currentBlock = 0, blocknames = ['grass', 'dirt', 'stone','coal','iron','gold'];
-var myGamePiece;
+        var blocks = [];
         var xpos = 2, ypos = 2, height = 100, width = 100;
 function loadTiles(){
 	for(var row = 0; row < height; row++){
 		for(var tile = 0; tile < width; tile++){
-				blocks.push('air');			
+				blocks.push('out');			
 		}
     }
     addRoom(1, 1, 4, 5, 1, 1, 1, 1);
@@ -50,45 +49,45 @@ function loadTiles(){
         function addRoom(xx,yy,ww,hh,wt,wr,wb,wl) {
             for (var l = 0; l < ww; l++) {
                 for (var m = 0; m < hh; m++) {
-                    blocks[(width * (yy + l)) + xx + m] = 'stone';
+                    blocks[(width * (yy + l)) + xx + m] = 'floor';
                 }
             }
             if (wl) {
                 for (var k = 0; k < ww; k++) {
-                    blocks[(width * (yy + k)) + xx - 1] = 'gold';
+                    blocks[(width * (yy + k)) + xx - 1] = 'lwall';
                 }
             }
             if (wr) {
                 for (var k = 0; k < ww; k++) {
-                    blocks[(width * (yy + k)) + xx + hh] = 'gold';
+                    blocks[(width * (yy + k)) + xx + hh] = 'rwall';
                 }
             }
             if (wt) {
                 for (var k = 0; k < hh; k++) {
-                    blocks[(width * (yy - 1)) + xx + k] = 'gold';
+                    blocks[(width * (yy - 1)) + xx + k] = 'twall';
                 }
             }
             if (wb) {
                 for (var k = 0; k < hh; k++) {
-                    blocks[(width * (yy + ww)) + xx + k] = 'gold';
+                    blocks[(width * (yy + ww)) + xx + k] = 'bwall';
                 }
             }
             if (wt && wl) {
-                blocks[(width * (yy - 1)) + xx - 1] = 'gold';
+                blocks[(width * (yy - 1)) + xx - 1] = 'tlc';
             }
             if (wb && wl) {
-                blocks[(width * (yy + ww)) + xx - 1] = 'gold';
+                blocks[(width * (yy + ww)) + xx - 1] = 'blc';
             }
             if (wt && wr) {
-                blocks[(width * (yy - 1)) + xx +  hh] = 'gold';
+                blocks[(width * (yy - 1)) + xx +  hh] = 'trc';
             }
             if (wb && wr) {
-                blocks[(width * (yy + ww)) + xx + hh] = 'gold';
+                blocks[(width * (yy + ww)) + xx + hh] = 'brc';
             }
         }
 function startGame() {
     myGameArea.start();
-    myGamePiece = new component(20, 20, "red", 240, 240);
+    myGamePiece = new component(50, 50, "red", 150, 150);
     loadTiles();
     renderBlocks();
 
@@ -97,11 +96,11 @@ function startGame() {
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 500;
-        this.canvas.height = 500;
+        this.canvas.width = 350;
+        this.canvas.height = 350;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
-        this.interval = setInterval(updateGameArea, 20);
+        this.interval = setInterval(updateGameArea, 50);
         window.addEventListener('keydown', function (e) {
             myGameArea.keys = (myGameArea.keys || []);
             myGameArea.keys[e.keyCode] = (e.type == "keydown");
@@ -148,35 +147,48 @@ function renderBlocks(){
 
 		var rowDraw = Math.floor(l / width);
         var tileDraw = l % width;
-        switch(blocks[l]){
-        	case 'air':
-            	ctx.fillStyle = 'skyblue';
-        		break;
-            case 'grass':
-            	ctx.fillStyle = 'lime';
-        		break;
-            case 'dirt':
-            	ctx.fillStyle = 'brown';
-        		break;
-            case 'stone':
-            	ctx.fillStyle = 'lightgrey';
-        		break;
-            case 'coal':
-            	ctx.fillStyle = 'black';
-        		break;
-            case 'iron':
-            	ctx.fillStyle = '#ffcc99';
-        		break;
-            case 'gold':
-            	ctx.fillStyle = 'gold';
-        		break;
+        if ((tileDraw - xpos + 3) * 50 <= 400 && (tileDraw - xpos + 3) * 50 >= -50 && (rowDraw - ypos + 3) * 50 <= 400 && (rowDraw - ypos + 3) * 50 >= -50) {
+            var imgs = new Image();
+            switch (blocks[l]) {
+                case 'out':
+                    imgs.src = 'Space Texture (Outside Filler).PNG';
+                    break;
+                case 'floor':
+                    imgs.src = 'Floor Texture.PNG';
+                    break;
+                case 'bwall':
+                    imgs.src = 'Wall Texture (Bottom).PNG';
+                    break;
+                case 'rwall':
+                    imgs.src = 'Wall Texture (Right).PNG';
+                    break;
+                case 'lwall':
+                    imgs.src = 'Wall Texture (Left).PNG';
+                    break;
+                case 'twall':
+                    imgs.src = 'Wall Texture (Top).PNG';
+                    break;
+                case 'tlc':
+                    imgs.src = 'Corner Wall Texture (Top Left).PNG';
+                    break;
+                case 'trc':
+                    imgs.src = 'Corner Wall Texture (Top Right).PNG';
+                    break;
+                case 'blc':
+                    imgs.src = 'Corner Wall Texture (Bottom Left).PNG';
+                    break;
+                case 'brc':
+                    imgs.src = 'Corner Wall Texture (Bottom Right).PNG';
+                    break;
+
+            }
+            ctx.drawImage(imgs, (tileDraw - xpos + 3) * 50, (rowDraw - ypos + 3) * 50, 50, 50);
         }
-        ctx.fillRect((tileDraw - xpos + 12) * 20,(rowDraw - ypos + 12) * 20,20,20);
 	}
 }
 
 function left() {
-    if (blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.5)] == 'stone' && blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.5)] == 'stone') {
+    if (blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.5)] == 'floor' && blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.5)] == 'floor') {
 
         xpos += 0.5;
         if (xpos >= width - 1) {
@@ -185,7 +197,7 @@ function left() {
     }
 }
         function right() {
-            if (blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.5)] == 'stone' && blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.5)] == 'stone') {
+            if (blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.5)] == 'floor' && blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.5)] == 'floor') {
 
                 xpos -= 0.5;
                 if (xpos <= 0) {
@@ -194,7 +206,7 @@ function left() {
             }
 }
 function up(){
-    if (blocks[(Math.floor(ypos - 0.5) * width) + Math.floor(xpos)] == 'stone' && blocks[(Math.floor(ypos - 0.5) * width) + Math.ceil(xpos)] == 'stone') {
+    if (blocks[(Math.floor(ypos - 0.5) * width) + Math.floor(xpos)] == 'floor' && blocks[(Math.floor(ypos - 0.5) * width) + Math.ceil(xpos)] == 'floor') {
 
         ypos -= 0.5;
         if (ypos <= 0) {
@@ -203,7 +215,7 @@ function up(){
     }
 }
         function down() {
-            if (blocks[(Math.ceil(ypos + 0.5) * width) + Math.floor(xpos)] == 'stone' && blocks[(Math.ceil(ypos + 0.5) * width) + Math.ceil(xpos)] == 'stone') {
+            if (blocks[(Math.ceil(ypos + 0.5) * width) + Math.floor(xpos)] == 'floor' && blocks[(Math.ceil(ypos + 0.5) * width) + Math.ceil(xpos)] == 'floor') {
 
                 ypos += 0.5;
                 if (ypos >= height) {
