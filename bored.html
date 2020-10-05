@@ -14,54 +14,78 @@
 
         var blocks = [], invblocks = [0, 0, 0, 0, 0, 0], currentBlock = 0, blocknames = ['grass', 'dirt', 'stone','coal','iron','gold'];
 var myGamePiece;
-var xpos = 4, ypos = 0,height = 100, width = 300,gravity = 0.01 ,gravityspeed = 0;
+        var xpos = 2, ypos = 2, height = 100, width = 100;
 function loadTiles(){
 	for(var row = 0; row < height; row++){
 		for(var tile = 0; tile < width; tile++){
-			if(row < 29){
-				blocks.push('air');
-			} else if(row == 29){
-            		blocks.push('grass');
-			} else if(row >= 30 && row < 32){
-				blocks.push('dirt');
-			} else if(row == 32){
-            	var randDec = Math.floor(Math.random() * 100);
-            	if(randDec <= 40){
-            		blocks.push('dirt');
-            	} else {
-            		blocks.push('stone');
-            	}
-            } else if(row > 32 && row < 40){
-            	var randDec = Math.floor(Math.random() * 100);
-            	if(randDec <= 10){
-            		blocks.push('coal');
-            	} else {
-            		blocks.push('stone');
-            	}
-            } else if(row >= 40 && row < 50){
-            	var randDec = Math.floor(Math.random() * 100);
-            	if(randDec <= 8){
-            		blocks.push('coal');
-            	} else if(randDec > 8 && randDec <= 12){
-            		blocks.push('iron');
-            	} else{
-                	blocks.push('stone');
-                }
-            } else if(row >= 50){
-            	var randDec = Math.floor(Math.random() * 100);
-            	if(randDec <= 7){
-            		blocks.push('coal');
-            	} else if(randDec > 7 && randDec <= 11){
-            		blocks.push('iron');
-            	} else if(randDec == 12){
-            		blocks.push('gold');
-            	} else{
-                	blocks.push('stone');
+				blocks.push('air');			
+		}
+    }
+    addRoom(1, 1, 4, 5, 1, 1, 1, 1);
+    addRoom(12, 1, 4, 8, 1, 1, 1, 1);
+    addRoom(23, 1, 5, 4, 1, 1, 1, 1);
+    addRoom(1, 8, 5, 8, 1, 1, 1, 1);
+    addRoom(10, 8, 5, 6, 1, 1, 1, 1);
+    addRoom(9, 14, 3, 7, 1, 1, 1, 1);
+    addRoom(11, 20, 5, 5, 1, 1, 1, 1);
+    addRoom(21, 9, 3, 6, 1, 1, 1, 1);
+
+    addRoom(1, 5, 3, 1, 0, 1, 0, 1);
+    addRoom(17, 5, 21, 1, 0, 1, 1, 1);
+    addRoom(7, 13, 13, 1, 0, 1, 1, 1);
+
+    addRoom(20, 1, 1, 3, 1, 0, 1, 0);
+    addRoom(6, 1, 1, 6, 1, 0, 1, 0);
+    addRoom(9, 12, 1, 1, 1, 0, 1, 0);
+    addRoom(16, 12, 1, 1, 1, 0, 1, 0);
+    addRoom(8, 16, 1, 1, 1, 0, 1, 0);
+    addRoom(8, 25, 1, 9, 1, 0, 1, 0);
+    addRoom(18, 17, 1, 8, 1, 1, 1, 0);
+
+    addRoom(15, 24, 1, 1, 0, 1, 0, 1);
+    addRoom(25, 12, 5, 1, 0, 1, 0, 1);
+
+
+}
+        function addRoom(xx,yy,ww,hh,wt,wr,wb,wl) {
+            for (var l = 0; l < ww; l++) {
+                for (var m = 0; m < hh; m++) {
+                    blocks[(width * (yy + l)) + xx + m] = 'stone';
                 }
             }
-		}
-	}
-}
+            if (wl) {
+                for (var k = 0; k < ww; k++) {
+                    blocks[(width * (yy + k)) + xx - 1] = 'gold';
+                }
+            }
+            if (wr) {
+                for (var k = 0; k < ww; k++) {
+                    blocks[(width * (yy + k)) + xx + hh] = 'gold';
+                }
+            }
+            if (wt) {
+                for (var k = 0; k < hh; k++) {
+                    blocks[(width * (yy - 1)) + xx + k] = 'gold';
+                }
+            }
+            if (wb) {
+                for (var k = 0; k < hh; k++) {
+                    blocks[(width * (yy + ww)) + xx + k] = 'gold';
+                }
+            }
+            if (wt && wl) {
+                blocks[(width * (yy - 1)) + xx - 1] = 'gold';
+            }
+            if (wb && wl) {
+                blocks[(width * (yy + ww)) + xx - 1] = 'gold';
+            }
+            if (wt && wr) {
+                blocks[(width * (yy - 1)) + xx +  hh] = 'gold';
+            }
+            if (wb && wr) {
+                blocks[(width * (yy + ww)) + xx + hh] = 'gold';
+            }
+        }
 function startGame() {
     myGameArea.start();
     myGamePiece = new component(20, 20, "red", 240, 240);
@@ -150,127 +174,53 @@ function renderBlocks(){
         ctx.fillRect((tileDraw - xpos + 12) * 20,(rowDraw - ypos + 12) * 20,20,20);
 	}
 }
-function rungravity(){
-if(blocks[((Math.floor(ypos) + 1) * width) + Math.floor(xpos)] == 'air' && blocks[((Math.floor(ypos) + 1) * width) + Math.ceil(xpos)] == 'air'){
-gravityspeed += gravity;
-} else {
-gravityspeed = 0;
-}
-if(gravityspeed < 0){
-if(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] == 'air' || blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] == 'air'){
-ypos += gravityspeed;
-}
-} else {
-ypos += gravityspeed;
 
+function left() {
+    if (blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.5)] == 'stone' && blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.5)] == 'stone') {
+
+        xpos += 0.5;
+        if (xpos >= width - 1) {
+            xpos = width - 1;
+        }
+    }
 }
-if(blocks[((Math.floor(ypos) + 1) * width) + Math.floor(xpos)] != 'air'|| blocks[((Math.floor(ypos) + 1) * width) + Math.ceil(xpos)] != 'air'){
-ypos = Math.floor(ypos);
-}
-}
-function left(){
-if(blocks[(Math.floor(ypos) * width) + Math.floor(xpos) + 1] == 'air'){
-xpos += 0.5;
-if(xpos >= width -1){
-xpos = width - 1;
-}
-}
-}
-function right(){
-if(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos) - 1] == 'air'){
-xpos -= 0.5;
-if(xpos <= 0){
-xpos = 0;
-}
-}
+        function right() {
+            if (blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.5)] == 'stone' && blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.5)] == 'stone') {
+
+                xpos -= 0.5;
+                if (xpos <= 0) {
+                    xpos = 0;
+                }
+            }
 }
 function up(){
-if((blocks[((Math.floor(ypos) + 1) * width) + Math.floor(xpos)] != 'air' || blocks[((Math.floor(ypos) + 1) * width) + Math.ceil(xpos)] != 'air') && myGameArea.keys && myGameArea.keys[38]){
+    if (blocks[(Math.floor(ypos - 0.5) * width) + Math.floor(xpos)] == 'stone' && blocks[(Math.floor(ypos - 0.5) * width) + Math.ceil(xpos)] == 'stone') {
 
-
-if(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] == 'air' && blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] == 'air'){
-gravity = -0.3;
-gravityspeed += gravity;
-ypos += gravityspeed;
-}
-} else {
-    gravity = 0.05;
-}
+        ypos -= 0.5;
+        if (ypos <= 0) {
+            ypos = 0;
         }
+    }
+}
+        function down() {
+            if (blocks[(Math.ceil(ypos + 0.5) * width) + Math.floor(xpos)] == 'stone' && blocks[(Math.ceil(ypos + 0.5) * width) + Math.ceil(xpos)] == 'stone') {
 
-        function selection() {
-            if (myGameArea.keys && myGameArea.keys[32]) {
-                currentBlock += 1;
-                if (currentBlock == 6) {
-                    currentBlock = 0;
+                ypos += 0.5;
+                if (ypos >= height) {
+                    ypos = height;
                 }
-                document.getElementById('activeblock').innerHTML = 'Current: ' + blocknames[currentBlock];
-                myGameArea.keys[32] = false;
-
             }
         }
-function checkDestroy(){
-
-    if (myGameArea.x && myGameArea.y) {
-        var blockClicked = blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12];
-        if (blockClicked == 'air') {
-            invblocks[currentBlock] -= 1;
-            switch (blockClicked) {
-                case 0:
-                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'grass';
-                    break;
-                case 1:
-                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'dirt';
-                    break;
-                case 2:
-                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'stone';
-                    break;
-                case 3:
-                    iblocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'coal';
-                    break;
-                case 4:
-                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'iron';
-                    break;
-                case 5:
-                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'gold';
-                    break;
-            }
-        } else {
-            switch (blockClicked) {
-                case 'grass':
-                    invblocks[0] += 1;
-                    break;
-                case 'dirt':
-                    invblocks[1] += 1;
-                    break;
-                case 'stone':
-                    invblocks[2] += 1;
-                    break;
-                case 'coal':
-                    invblocks[3] += 1;
-                    break;
-                case 'iron':
-                    invblocks[4] += 1;
-                    break;
-                case 'gold':
-                    invblocks[5] += 1;
-                    break;
-            }
-            blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'air';
-        }
-        myGameArea.x = false;
-        myGameArea.y = false;
-   	}
-}
 function updateGameArea() {
     myGameArea.clear();
     if (myGameArea.keys && myGameArea.keys[37]) {right()}
-    if (myGameArea.keys && myGameArea.keys[39]) {left()}
-    up();
-    rungravity();
-    selection();
+    if (myGameArea.keys && myGameArea.keys[39]) { left() }
+    if (myGameArea.keys && myGameArea.keys[38]) { up() }
+
+    if (myGameArea.keys && myGameArea.keys[40]) { down() }
+
+
     renderBlocks();
-   	checkDestroy();
 
     myGamePiece.newPos();
     myGamePiece.update();
