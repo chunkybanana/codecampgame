@@ -1,0 +1,282 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <style>
+        canvas {
+            border: 1px solid #d3d3d3;
+            background-color: #f1f1f1;
+        }
+    </style>
+</head>
+<body onload="startGame()">
+    <script>
+
+        var blocks = [], invblocks = [0, 0, 0, 0, 0, 0], currentBlock = 0, blocknames = ['grass', 'dirt', 'stone','coal','iron','gold'];
+var myGamePiece;
+var xpos = 4, ypos = 0,height = 100, width = 300,gravity = 0.01 ,gravityspeed = 0;
+function loadTiles(){
+	for(var row = 0; row < height; row++){
+		for(var tile = 0; tile < width; tile++){
+			if(row < 29){
+				blocks.push('air');
+			} else if(row == 29){
+            		blocks.push('grass');
+			} else if(row >= 30 && row < 32){
+				blocks.push('dirt');
+			} else if(row == 32){
+            	var randDec = Math.floor(Math.random() * 100);
+            	if(randDec <= 40){
+            		blocks.push('dirt');
+            	} else {
+            		blocks.push('stone');
+            	}
+            } else if(row > 32 && row < 40){
+            	var randDec = Math.floor(Math.random() * 100);
+            	if(randDec <= 10){
+            		blocks.push('coal');
+            	} else {
+            		blocks.push('stone');
+            	}
+            } else if(row >= 40 && row < 50){
+            	var randDec = Math.floor(Math.random() * 100);
+            	if(randDec <= 8){
+            		blocks.push('coal');
+            	} else if(randDec > 8 && randDec <= 12){
+            		blocks.push('iron');
+            	} else{
+                	blocks.push('stone');
+                }
+            } else if(row >= 50){
+            	var randDec = Math.floor(Math.random() * 100);
+            	if(randDec <= 7){
+            		blocks.push('coal');
+            	} else if(randDec > 7 && randDec <= 11){
+            		blocks.push('iron');
+            	} else if(randDec == 12){
+            		blocks.push('gold');
+            	} else{
+                	blocks.push('stone');
+                }
+            }
+		}
+	}
+}
+function startGame() {
+    myGameArea.start();
+    myGamePiece = new component(20, 20, "red", 240, 240);
+    loadTiles();
+    renderBlocks();
+
+}
+
+var myGameArea = {
+    canvas : document.createElement("canvas"),
+    start : function() {
+        this.canvas.width = 500;
+        this.canvas.height = 500;
+        this.context = this.canvas.getContext("2d");
+        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        this.interval = setInterval(updateGameArea, 20);
+        window.addEventListener('keydown', function (e) {
+            myGameArea.keys = (myGameArea.keys || []);
+            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        window.addEventListener('keyup', function (e) {
+            myGameArea.keys[e.keyCode] = (e.type == "keydown");
+        })
+        window.addEventListener('mousedown', function (e) {
+      myGameArea.x = e.pageX;
+      myGameArea.y = e.pageY;
+
+    })
+    window.addEventListener('mouseup', function (e) {
+      myGameArea.x = false;
+      myGameArea.y = false;
+    })
+    },
+    clear : function(){
+        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+    }
+}
+
+function component(width, height, color, x, y) {
+    this.gamearea = myGameArea;
+    this.width = width;
+    this.height = height;
+    this.speedX = 0;
+    this.speedY = 0;
+    this.x = x;
+    this.y = y;
+    this.update = function() {
+        ctx = myGameArea.context;
+        ctx.fillStyle = color;
+        ctx.fillRect(this.x, this.y, this.width, this.height);
+    }
+    this.newPos = function() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+    }
+}
+function renderBlocks(){
+    var ctx = myGameArea.context;
+	for(var l = 0; l < blocks.length; l++){
+
+		var rowDraw = Math.floor(l / width);
+        var tileDraw = l % width;
+        switch(blocks[l]){
+        	case 'air':
+            	ctx.fillStyle = 'skyblue';
+        		break;
+            case 'grass':
+            	ctx.fillStyle = 'lime';
+        		break;
+            case 'dirt':
+            	ctx.fillStyle = 'brown';
+        		break;
+            case 'stone':
+            	ctx.fillStyle = 'lightgrey';
+        		break;
+            case 'coal':
+            	ctx.fillStyle = 'black';
+        		break;
+            case 'iron':
+            	ctx.fillStyle = '#ffcc99';
+        		break;
+            case 'gold':
+            	ctx.fillStyle = 'gold';
+        		break;
+        }
+        ctx.fillRect((tileDraw - xpos + 12) * 20,(rowDraw - ypos + 12) * 20,20,20);
+	}
+}
+function rungravity(){
+if(blocks[((Math.floor(ypos) + 1) * width) + Math.floor(xpos)] == 'air' && blocks[((Math.floor(ypos) + 1) * width) + Math.ceil(xpos)] == 'air'){
+gravityspeed += gravity;
+} else {
+gravityspeed = 0;
+}
+if(gravityspeed < 0){
+if(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] == 'air' || blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] == 'air'){
+ypos += gravityspeed;
+}
+} else {
+ypos += gravityspeed;
+
+}
+if(blocks[((Math.floor(ypos) + 1) * width) + Math.floor(xpos)] != 'air'|| blocks[((Math.floor(ypos) + 1) * width) + Math.ceil(xpos)] != 'air'){
+ypos = Math.floor(ypos);
+}
+}
+function left(){
+if(blocks[(Math.floor(ypos) * width) + Math.floor(xpos) + 1] == 'air'){
+xpos += 0.5;
+if(xpos >= width -1){
+xpos = width - 1;
+}
+}
+}
+function right(){
+if(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos) - 1] == 'air'){
+xpos -= 0.5;
+if(xpos <= 0){
+xpos = 0;
+}
+}
+}
+function up(){
+if((blocks[((Math.floor(ypos) + 1) * width) + Math.floor(xpos)] != 'air' || blocks[((Math.floor(ypos) + 1) * width) + Math.ceil(xpos)] != 'air') && myGameArea.keys && myGameArea.keys[38]){
+
+
+if(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] == 'air' && blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] == 'air'){
+gravity = -0.3;
+gravityspeed += gravity;
+ypos += gravityspeed;
+}
+} else {
+    gravity = 0.05;
+}
+        }
+
+        function selection() {
+            if (myGameArea.keys && myGameArea.keys[32]) {
+                currentBlock += 1;
+                if (currentBlock == 6) {
+                    currentBlock = 0;
+                }
+                document.getElementById('activeblock').innerHTML = 'Current: ' + blocknames[currentBlock];
+                myGameArea.keys[32] = false;
+
+            }
+        }
+function checkDestroy(){
+
+    if (myGameArea.x && myGameArea.y) {
+        var blockClicked = blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12];
+        if (blockClicked == 'air') {
+            invblocks[currentBlock] -= 1;
+            switch (blockClicked) {
+                case 0:
+                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'grass';
+                    break;
+                case 1:
+                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'dirt';
+                    break;
+                case 2:
+                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'stone';
+                    break;
+                case 3:
+                    iblocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'coal';
+                    break;
+                case 4:
+                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'iron';
+                    break;
+                case 5:
+                    blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'gold';
+                    break;
+            }
+        } else {
+            switch (blockClicked) {
+                case 'grass':
+                    invblocks[0] += 1;
+                    break;
+                case 'dirt':
+                    invblocks[1] += 1;
+                    break;
+                case 'stone':
+                    invblocks[2] += 1;
+                    break;
+                case 'coal':
+                    invblocks[3] += 1;
+                    break;
+                case 'iron':
+                    invblocks[4] += 1;
+                    break;
+                case 'gold':
+                    invblocks[5] += 1;
+                    break;
+            }
+            blocks[((ypos + Math.floor(myGameArea.y / 20) - 12) * width) + Math.floor(myGameArea.x / 20) + xpos - 12] = 'air';
+        }
+        myGameArea.x = false;
+        myGameArea.y = false;
+   	}
+}
+function updateGameArea() {
+    myGameArea.clear();
+    if (myGameArea.keys && myGameArea.keys[37]) {right()}
+    if (myGameArea.keys && myGameArea.keys[39]) {left()}
+    up();
+    rungravity();
+    selection();
+    renderBlocks();
+   	checkDestroy();
+
+    myGamePiece.newPos();
+    myGamePiece.update();
+}</script>
+    <div id="hotbar"><div id="activeblock"></div></div>
+    <p>Make sure this window has focus, then use the arrow keys on you keyboard to move the red square.</p>
+    <p>When pressing both the left and the down arrow, the red square will move both down and to the left.</p>
+</body>
+</html>
