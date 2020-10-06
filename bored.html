@@ -132,6 +132,17 @@ function loadTiles(){
     addDetail(3, 4, 'mbl');
     addDetail(3, 5, 'mbl');
     addDetail(3, 3, 'mbl');
+    addDetail(12, 9, 'dwhw');
+    addDetail(15, 9, 'dwhw');
+    addDetail(15, 4, 't');
+    addDetail(15, 6, 't');
+    addDetail(17, 3, 't');
+    addDetail(17, 5, 't');
+    addDetail(19, 4, 't');
+    addDetail(29, 6, 't');
+    addDetail(21, 3, 't');
+    addDetail(21, 5, 't');
+
 }
 
 
@@ -301,13 +312,19 @@ function renderBlocks(){
                     imgs.src = 'Medbay Bed Texture (Right).PNG';
                     break;
                 case 'gl':
-                    imgs.src = 'Left Greenhouse Texture.PNG';
+                    imgs.src = 'Right Greenhouse Texture.PNG';
                     break;
                 case 'gm':
                     imgs.src = 'Center Greenhouse Texture.PNG';
                     break;
                 case 'gr':
-                    imgs.src = 'Right Greenhouse Texture.PNG';
+                    imgs.src = 'Left Greenhouse Texture.PNG';
+                    break;
+                case 't':
+                    imgs.src = 'Cafeteria Table Texture.PNG';
+                    break;
+                case 'dwhw':
+                    imgs.src = 'Double Wall Wiring (Horizontal).PNG';
                     break;
             }
             ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
