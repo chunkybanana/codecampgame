@@ -6,10 +6,18 @@
         canvas {
             border: 1px solid #d3d3d3;
             background-color: #f1f1f1;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
         }
         img {
-            transform: translate(-244px,-113px);
-            width: 130px;
+            transform: translate(-482px,-226px);
+            width: 260px;
+            image-rendering: -moz-crisp-edges;
+            image-rendering: -webkit-crisp-edges;
+            image-rendering: pixelated;
+            image-rendering: crisp-edges;
         }        
     </style>
 </head>
@@ -17,81 +25,88 @@
     <script>
 
         var blocks = [];
-        var xpos = 2, ypos = 2, height = 100, width = 100;
+        var xpos = 4, ypos = 4, height = 32, width = 32;
 function loadTiles(){
 	for(var row = 0; row < height; row++){
 		for(var tile = 0; tile < width; tile++){
 				blocks.push('out');			
 		}
     }
-    addRoom(1, 1, 4, 5, 1, 1, 1, 1);
-    addRoom(12, 1, 4, 8, 1, 1, 1, 1);
-    addRoom(23, 1, 5, 4, 1, 1, 1, 1);
-    addRoom(1, 8, 5, 8, 1, 1, 1, 1);
-    addRoom(10, 8, 5, 6, 1, 1, 1, 1);
-    addRoom(9, 14, 3, 7, 1, 1, 1, 1);
-    addRoom(11, 20, 5, 5, 1, 1, 1, 1);
-    addRoom(21, 9, 3, 6, 1, 1, 1, 1);
+    addRoom(3, 3, 4, 5, 1, 1, 1, 1);
+    addRoom(14, 3, 4, 8, 1, 1, 1, 1);
+    addRoom(25, 3, 5, 4, 1, 1, 1, 1);
+    addRoom(3, 10, 5, 8, 1, 1, 1, 1);
+    addRoom(12, 10, 5, 6, 1, 1, 1, 1);
+    addRoom(11, 16, 3, 7, 1, 1, 1, 1);
+    addRoom(13, 22, 5, 5, 1, 1, 1, 1);
+    addRoom(23, 11, 3, 6, 1, 1, 1, 1);
 
-    addRoom(1, 5, 3, 1, 0, 1, 0, 1);
-    addRoom(17, 5, 21, 1, 0, 1, 1, 1);
-    addRoom(7, 13, 13, 1, 0, 1, 1, 1);
+    addRoom(3, 7, 3, 1, 0, 1, 0, 1);
+    addRoom(19, 7, 21, 1, 0, 1, 1, 1);
+    addRoom(9, 15, 13, 1, 0, 1, 1, 1);
 
-    addRoom(20, 1, 1, 3, 1, 0, 1, 0);
-    addRoom(6, 1, 1, 6, 1, 0, 1, 0);
-    addRoom(9, 12, 1, 1, 1, 0, 1, 0);
-    addRoom(16, 12, 1, 1, 1, 0, 1, 0);
-    addRoom(8, 16, 1, 1, 1, 0, 1, 0);
-    addRoom(8, 25, 1, 9, 1, 0, 1, 0);
-    addRoom(18, 17, 1, 8, 1, 1, 1, 0);
+    addRoom(22, 3, 1, 3, 1, 0, 1, 0);
+    addRoom(8, 3, 1, 6, 1, 0, 1, 0);
+    addRoom(11, 14, 1, 1, 1, 0, 1, 0);
+    addRoom(18, 14, 1, 1, 1, 0, 1, 0);
+    addRoom(10, 18, 1, 1, 1, 0, 1, 0);
+    addRoom(10, 27, 1, 9, 1, 0, 1, 0);
+    addRoom(20, 19, 1, 8, 1, 1, 1, 0);
 
-    addRoom(15, 24, 1, 1, 0, 1, 0, 1);
-    addRoom(25, 12, 5, 1, 0, 1, 0, 1);
+    addRoom(17, 26, 1, 1, 0, 1, 0, 1);
+    addRoom(27, 14, 5, 1, 0, 1, 0, 1);
 
-    addDetail(6, 2, "bric");
-    addDetail(11, 2, "blic");
-    addDetail(2, 5, "bric");
-    addDetail(16, 5, "blic");
-    addDetail(18, 5, "bric");
-    addDetail(20, 2, "bric");
-    addDetail(22, 2, "blic");
-    addDetail(2, 7, "tric");
-    addDetail(6, 13, "blic");
-    addDetail(8, 13, "bric");
-    addDetail(16, 13, "blic");
-    addDetail(18, 16, "tric");
-    addDetail(18, 18, "bric");
-    addDetail(24, 16, "tlic");
-    addDetail(24, 12, "blic");
-    addDetail(26, 12, "bric");
-    addDetail(8, 17, "bric");
-    addDetail(8, 24, "tric");
-    addDetail(9, 13, 'dwh');
-    addDetail(10, 13, 'dwh');
-    addDetail(11, 13, 'dwh');
-    addDetail(12, 13, 'dwh');
-    addDetail(13, 13, 'dwh');
-    addDetail(14, 13, 'dwh');
-    addDetail(15, 13, 'dwh');
-    addDetail(11, 24, 'dwh');
-    addDetail(12, 24, 'dwh');
-    addDetail(13, 24, 'dwh');
-    addDetail(16, 23, 'dwv');
-    addDetail(16, 22, 'dwv');
-    addDetail(16, 21, 'dwv');
-    addDetail(16, 20, 'dwv');
-    addDetail(16, 16, 'dwv');
-    addDetail(16, 15, 'dwv');
-    addDetail(16, 14, 'dwv');
-    addDetail(16, 10, 'dwv');
-    addDetail(16, 9, 'dwv');
-    addDetail(16, 8, 'dwv');
-    addDetail(8, 14, 'dwv');
-    addDetail(9, 10, 'dwv');
-    addDetail(9, 9, 'dwv');
-    addDetail(9, 8, 'dwv');
-
-
+    addDetail(8, 4, "bric");
+    addDetail(13, 4, "blic");
+    addDetail(4, 7, "bric");
+    addDetail(18, 7, "blic");
+    addDetail(20, 7, "bric");
+    addDetail(22, 4, "bric");
+    addDetail(24, 4, "blic");
+    addDetail(4, 9, "tric");
+    addDetail(8, 15, "blic");
+    addDetail(10, 15, "bric");
+    addDetail(18, 15, "blic");
+    addDetail(20, 18, "tric");
+    addDetail(20, 20, "bric");
+    addDetail(26, 18, "tlic");
+    addDetail(26, 14, "blic");
+    addDetail(28, 14, "bric");
+    addDetail(10, 19, "bric");
+    addDetail(10, 26, "tric");
+    addDetail(11, 15, 'dwh');
+    addDetail(12, 15, 'dwh');
+    addDetail(13, 15, 'dwh');
+    addDetail(14, 15, 'dwh');
+    addDetail(15, 15, 'dwh');
+    addDetail(16, 15, 'dwh');
+    addDetail(17, 15, 'dwh');
+    addDetail(13, 26, 'dwh');
+    addDetail(14, 26, 'dwh');
+    addDetail(15, 26, 'dwh');
+    addDetail(18, 25, 'dwv');
+    addDetail(18, 24, 'dwv');
+    addDetail(18, 23, 'dwv');
+    addDetail(18, 22, 'dwv');
+    addDetail(18, 17, 'dwv');
+    addDetail(18, 16, 'dwv');
+    addDetail(18, 12, 'dwv');
+    addDetail(18, 11, 'dwv');
+    addDetail(18, 10, 'dwv');
+    addDetail(10, 16, 'dwv');
+    addDetail(11, 12, 'dwv');
+    addDetail(11, 11, 'dwv');
+    addDetail(11, 10, 'dwv');
+    addDetail(11, 13, 'dwet');
+    addDetail(18, 13, 'dwet');
+    addDetail(18, 26, 'dwet');
+    addDetail(10, 17, 'dwet');
+    addDetail(16, 26, 'dwel');
+    addDetail(12, 26, 'twb');
+    addDetail(18, 21, 'twr');
+    addDetail(18, 19, 'twr');
+    addDetail(18, 9, 'twr');
+    addDetail(11, 9, 'twot');
 }
         function addDetail(xx, yy, src) {
             blocks[(yy * width) + xx] = src;
@@ -145,8 +160,8 @@ function startGame() {
 var myGameArea = {
     canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 350;
-        this.canvas.height = 350;
+        this.canvas.width = 700;
+        this.canvas.height = 700;
         this.context = this.canvas.getContext("2d");
         document.body.insertBefore(this.canvas, document.body.childNodes[0]);
         this.interval = setInterval(updateGameArea, 50);
@@ -177,7 +192,7 @@ function renderBlocks(){
 
 		var rowDraw = Math.floor(l / width);
         var tileDraw = l % width;
-        if ((tileDraw - xpos + 3) * 50 <= 400 && (tileDraw - xpos + 3) * 50 >= -50 && (rowDraw - ypos + 3) * 50 <= 400 && (rowDraw - ypos + 3) * 50 >= -50) {
+        if ((tileDraw - xpos + 3) * 100 <= 775 && (tileDraw - xpos + 3) * 100 >= -75 && (rowDraw - ypos + 3) * 100 <= 775 && (rowDraw - ypos + 3) * 100 >= -75) {
             var imgs = new Image();
             switch (blocks[l]) {
                 case 'out':
@@ -228,63 +243,104 @@ function renderBlocks(){
                 case 'dwv':
                     imgs.src = 'Double Sided Wall (Vertical).PNG';
                     break;
+                case 'dwet':
+                    imgs.src = 'Double Wall End (Top).PNG';
+                    break;
+                case 'dwel':
+                    imgs.src = 'Double Wall End (Left).PNG';
+                    break;
+                case 'twb':
+                    imgs.src = 'Triple Wall Bottom.png';
+                    break;
+                case 'twr':
+                    imgs.src = 'Triple Wall Right.png';
+                    break;
+                case 'twot':
+                    imgs.src = 'Triple Wall Outside Top.png';
+                    break;
             }
-            ctx.drawImage(imgs, (tileDraw - xpos + 3) * 50, (rowDraw - ypos + 3) * 50, 50, 50);
+            ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
         }
 	}
 }
 
 function left() {
-    if (blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.5)] == 'floor' && blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.5)] == 'floor') {
+    if (blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.25)] == 'floor' && blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.25)] == 'floor') {
 
-        xpos += 0.5;
+        xpos += 0.25;
         if (xpos >= width - 1) {
             xpos = width - 1;
         }
     }
 }
         function right() {
-            if (blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.5)] == 'floor' && blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.5)] == 'floor') {
+            if (blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.25)] == 'floor' && blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.25)] == 'floor') {
 
-                xpos -= 0.5;
+                xpos -= 0.25;
                 if (xpos <= 0) {
                     xpos = 0;
                 }
             }
 }
 function up(){
-    if (blocks[(Math.floor(ypos - 0.5) * width) + Math.floor(xpos)] == 'floor' && blocks[(Math.floor(ypos - 0.5) * width) + Math.ceil(xpos)] == 'floor') {
+    if (blocks[(Math.floor(ypos - 0.25) * width) + Math.floor(xpos)] == 'floor' && blocks[(Math.floor(ypos - 0.25) * width) + Math.ceil(xpos)] == 'floor') {
 
-        ypos -= 0.5;
+        ypos -= 0.25;
         if (ypos <= 0) {
             ypos = 0;
         }
     }
 }
         function down() {
-            if (blocks[(Math.ceil(ypos + 0.5) * width) + Math.floor(xpos)] == 'floor' && blocks[(Math.ceil(ypos + 0.5) * width) + Math.ceil(xpos)] == 'floor') {
+            if (blocks[(Math.ceil(ypos + 0.25) * width) + Math.floor(xpos)] == 'floor' && blocks[(Math.ceil(ypos + 0.25) * width) + Math.ceil(xpos)] == 'floor') {
 
-                ypos += 0.5;
+                ypos += 0.25;
                 if (ypos >= height) {
                     ypos = height;
                 }
             }
         }
+
 function updateGameArea() {
     myGameArea.clear();
-    if (myGameArea.keys && myGameArea.keys[37]) {right()}
-    if (myGameArea.keys && myGameArea.keys[39]) { left() }
-    if (myGameArea.keys && myGameArea.keys[38]) { up() }
+    if (myGameArea.keys && myGameArea.keys[37]) {
+        right();
+        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(4).gif') {
+            document.getElementById('player').src = 'New Piskel (4).gif';
+            console.log(document.getElementById('player').src)
+        }
+    }
+    if (myGameArea.keys && myGameArea.keys[39]) {
+        left(); 
+        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(5).gif') {
+            document.getElementById('player').src = 'New Piskel (5).gif';
+            console.log(document.getElementById('player').src);
 
-    if (myGameArea.keys && myGameArea.keys[40]) { down() }
+        }
+    }
+    if (myGameArea.keys && myGameArea.keys[38]) {
+        up();
+        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(7).gif') {
+            document.getElementById('player').src = 'New Piskel (7).gif';
+            console.log(document.getElementById('player').src);
+
+        }
+    }
+
+
+    if (myGameArea.keys && myGameArea.keys[40]) {
+        down();
+        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(6).gif') {
+            document.getElementById('player').src = 'New Piskel (6).gif';
+            console.log(document.getElementById('player').src);
+
+        }
+    }
 
 
     renderBlocks();
 
 }</script>
-    <img src="New Piskel (4).gif"/>
-    <div id="hotbar"><div id="activeblock"></div></div>
-    <p>Make sure this window has focus, then use the arrow keys on you keyboard to move the red square.</p>
-    <p>When pressing both the left and the down arrow, the red square will move both down and to the left.</p>
+    <img src="New Piskel (4).gif" id="player"/>
 </body>
 </html>
