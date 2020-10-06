@@ -66,6 +66,31 @@ function loadTiles(){
     addDetail(26, 12, "bric");
     addDetail(8, 17, "bric");
     addDetail(8, 24, "tric");
+    addDetail(9, 13, 'dwh');
+    addDetail(10, 13, 'dwh');
+    addDetail(11, 13, 'dwh');
+    addDetail(12, 13, 'dwh');
+    addDetail(13, 13, 'dwh');
+    addDetail(14, 13, 'dwh');
+    addDetail(15, 13, 'dwh');
+    addDetail(11, 24, 'dwh');
+    addDetail(12, 24, 'dwh');
+    addDetail(13, 24, 'dwh');
+    addDetail(16, 23, 'dwv');
+    addDetail(16, 22, 'dwv');
+    addDetail(16, 21, 'dwv');
+    addDetail(16, 20, 'dwv');
+    addDetail(16, 16, 'dwv');
+    addDetail(16, 15, 'dwv');
+    addDetail(16, 14, 'dwv');
+    addDetail(16, 10, 'dwv');
+    addDetail(16, 9, 'dwv');
+    addDetail(16, 8, 'dwv');
+    addDetail(8, 14, 'dwv');
+    addDetail(9, 10, 'dwv');
+    addDetail(9, 9, 'dwv');
+    addDetail(9, 8, 'dwv');
+
 
 }
         function addDetail(xx, yy, src) {
@@ -196,6 +221,12 @@ function renderBlocks(){
                     break;
                 case 'tlic':
                     imgs.src = 'Inside Corner Wall (Top Left).PNG';
+                    break;
+                case 'dwh':
+                    imgs.src = 'Double Sided Wall (Horisontal).PNG';
+                    break;
+                case 'dwv':
+                    imgs.src = 'Double Sided Wall (Vertical).PNG';
                     break;
             }
             ctx.drawImage(imgs, (tileDraw - xpos + 3) * 50, (rowDraw - ypos + 3) * 50, 50, 50);
