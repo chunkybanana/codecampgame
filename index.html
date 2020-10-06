@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<title>the pineapple coders</title>
+	<link href="style.css" rel="stylesheet" type="text/css" />
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.png">
+
+	<button onclick='alert("you clicked a button")'>click me</button>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+</head>
+<body>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+  <h1>Welcome to the Pineapple Coders Website!</h1>
+</div>
+
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="collapsibleNavbar">
+    <ul class="navbar-nav">
+        <a class="nav-link" href="file:///C:/Users/drew%20fitzgerald/Documents/code/html/pineapple%20coders/about%20us.html">about us</a>
+                <a class="nav-link" href="file:///C:/Users/drew%20fitzgerald/Documents/code/html/pineapple%20coders/our%20projects.html">our Projects
+</a>
+ <li class="nav-item">
+      </li>
+    </ul>
+  </div>
+</nav>
+
+<div class="container" style="margin-top:30px">
+  <div class="row">
+    <div class="col-sm-4">
+
+      <hr class="d-sm-none">
+    </div>
+    <div class="col-sm-8">
+      
+    </div>
+  </div>
+</div>
+
+<div class="container" style="margin-top:30px">
+  <div class="row">
+    <div class="col-sm-4">
+        <h2>We are the pineapple coders.</h2>
+        <p>We code and stuff our names are: Drew, Ethan, Ivan, and Theo.</p>
+    </div>
+  </div>
+</div>
+
+<div class="jumbotron text-center" style="margin-bottom:0">
+</div>
+<h1>
+      <script>
+function startTime() {
+  var today = new Date();
+  var h = today.getHours();
+  var m = today.getMinutes();
+  var s = today.getSeconds();
+  m = checkTime(m);
+  s = checkTime(s);
+  document.getElementById('txt').innerHTML =
+  h + ":" + m + ":" + s;
+  var t = setTimeout(startTime, 500);
+}
+function checkTime(i) {
+  if (i < 10) {i = "0" + i};
+  return i;
+}
+</script>
+</head>
+
+<body onload="startTime()">
+
+<div id="txt"></div>
+</h1>
+<embed src="music.mp3" autostart="true" loop="true"
+width="2" height="0">
+</embed>
+<button onclick='var answer=prompt("what is 5x5");
+if(answer=="25") alert("correct");
+else alert("wrong");
+
+var answer=prompt("what is 7x5");
+if(answer=="35") alert("correct");
+else alert("wrong");
+
+var answer=prompt("what is the capital of england");
+if(answer=="london") alert("correct");
+else alert("wrong");'>quiz</button>
+
+
+</body>
+</html>
