@@ -29,7 +29,7 @@
     <script>
 
         var blocks = [];
-        var xpos = 4, ypos = 4, height = 32, width = 32;
+        var xpos = 17, ypos = 3, height = 32, width = 32;
 function loadTiles(){
 	for(var row = 0; row < height; row++){
 		for(var tile = 0; tile < width; tile++){
@@ -57,6 +57,7 @@ function loadTiles(){
     addRoom(10, 27, 1, 9, 1, 0, 1, 0);
     addRoom(20, 19, 1, 8, 1, 1, 1, 0);
 
+    addRoom(17, 19, 3, 1, 0, 1, 0, 1);
     addRoom(17, 26, 1, 1, 0, 1, 0, 1);
     addRoom(27, 14, 5, 1, 0, 1, 0, 1);
 
@@ -92,6 +93,9 @@ function loadTiles(){
     addDetail(18, 24, 'dwv');
     addDetail(18, 23, 'dwv');
     addDetail(18, 22, 'dwv');
+    addDetail(18, 21, 'dwv');
+    addDetail(18, 20, 'dwv');
+    addDetail(18, 19, 'dwv');
     addDetail(18, 18, 'dwv');
     addDetail(18, 17, 'dwv');
     addDetail(18, 16, 'dwv');
@@ -108,10 +112,11 @@ function loadTiles(){
     addDetail(10, 17, 'dwet');
     addDetail(16, 26, 'dwel');
     addDetail(12, 26, 'twb');
-    addDetail(18, 21, 'twr');
-    addDetail(18, 19, 'twr');
     addDetail(18, 9, 'twr');
     addDetail(11, 9, 'twot');
+    addDetail(16, 19, 'blic');
+    addDetail(16, 21, 'tlic');
+
 }
 
 
@@ -319,49 +324,54 @@ function up(){
 
 function updateGameArea() {
     myGameArea.clear();
-    if (myGameArea.keys && myGameArea.keys[37]) {
+    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
         right();
     }
-    if (myGameArea.keys && myGameArea.keys[39]) {
+    if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
         left(); 
     }
-    if (myGameArea.keys && myGameArea.keys[38]) {
+    if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
         up();
     }
-    if (myGameArea.keys && myGameArea.keys[40]) {
+    if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
         down();
     }
 
-    if (myGameArea.keys && myGameArea.keys[37]) {
+    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(4).gif') {
             document.getElementById('player').src = 'New Piskel (4).gif';
-            console.log(document.getElementById('player').src)
         }
-    } else if (myGameArea.keys && myGameArea.keys[39]) {
+    } else if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(5).gif') {
             document.getElementById('player').src = 'New Piskel (5).gif';
-            console.log(document.getElementById('player').src);
 
         }
-    } else if (myGameArea.keys && myGameArea.keys[38]) {
+    } else if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(7).gif') {
             document.getElementById('player').src = 'New Piskel (7).gif';
-            console.log(document.getElementById('player').src);
 
         }
-    } else if (myGameArea.keys && myGameArea.keys[40]) {
+    } else if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(6).gif') {
             document.getElementById('player').src = 'New Piskel (6).gif';
-            console.log(document.getElementById('player').src);
 
         }
     } else {
         document.getElementById('player').src = 'New Piskel (8).gif';
-        console.log('idle')
     }
     console.log(myGameArea.keys)
     renderBlocks();
+    if (myGameArea.keys && (myGameArea.keys[109] || myGameArea.keys[77])) {
+        var map = new Image();
+        map.src = "map.png";
+        myGameArea.context.drawImage(map, 0, 0, 700, 700)
+        document.getElementById('player').style.opacity = 0;
+        myGameArea.context.fillStyle = 'yellow';
+        myGameArea.context.fillRect(xpos * 700 / 32, ypos * 700 / 32, 700 / 32, 700 / 32);
+    } else {
+        document.getElementById('player').style.opacity = 'inherit';
 
+    }
 }</script>
     <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player"/></div><button onclick="openFullscreen()">Fullscreen</button>
 </body>
