@@ -18,7 +18,11 @@
             image-rendering: -webkit-crisp-edges;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
-        }        
+        }
+        #game{
+            height: 702px;
+            width: 1100px;
+        }
     </style>
 </head>
 <body onload="startGame()">
@@ -88,6 +92,7 @@ function loadTiles(){
     addDetail(18, 24, 'dwv');
     addDetail(18, 23, 'dwv');
     addDetail(18, 22, 'dwv');
+    addDetail(18, 18, 'dwv');
     addDetail(18, 17, 'dwv');
     addDetail(18, 16, 'dwv');
     addDetail(18, 12, 'dwv');
@@ -108,6 +113,19 @@ function loadTiles(){
     addDetail(18, 9, 'twr');
     addDetail(11, 9, 'twot');
 }
+
+
+        function openFullscreen() {
+            if (document.getElementById('game').requestFullscreen) {
+                document.getElementById('game').requestFullscreen();
+            } else if (document.getElementById('game').mozRequestFullScreen) { /* Firefox */
+                document.getElementById('game').mozRequestFullScreen();
+            } else if (document.getElementById('game').webkitRequestFullscreen) { /* Chrome, Safari and Opera */
+                document.getElementById('game').webkitRequestFullscreen();
+            } else if (document.getElementById('game').msRequestFullscreen) { /* IE/Edge */
+                document.getElementById('game').msRequestFullscreen();
+            }
+        }
         function addDetail(xx, yy, src) {
             blocks[(yy * width) + xx] = src;
         }
@@ -158,12 +176,10 @@ function startGame() {
 }
 
 var myGameArea = {
-    canvas : document.createElement("canvas"),
     start : function() {
-        this.canvas.width = 700;
-        this.canvas.height = 700;
-        this.context = this.canvas.getContext("2d");
-        document.body.insertBefore(this.canvas, document.body.childNodes[0]);
+        document.getElementById("canvas").width = 700;
+        document.getElementById("canvas").height = 700;
+        this.context = document.getElementById("canvas").getContext("2d");
         this.interval = setInterval(updateGameArea, 50);
         window.addEventListener('keydown', function (e) {
             myGameArea.keys = (myGameArea.keys || []);
@@ -183,7 +199,7 @@ var myGameArea = {
     })
     },
     clear : function(){
-        this.context.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.context.clearRect(0, 0, document.getElementById("canvas").width, document.getElementById("canvas").height);
     }
 }
 function renderBlocks(){
@@ -305,42 +321,48 @@ function updateGameArea() {
     myGameArea.clear();
     if (myGameArea.keys && myGameArea.keys[37]) {
         right();
+    }
+    if (myGameArea.keys && myGameArea.keys[39]) {
+        left(); 
+    }
+    if (myGameArea.keys && myGameArea.keys[38]) {
+        up();
+    }
+    if (myGameArea.keys && myGameArea.keys[40]) {
+        down();
+    }
+
+    if (myGameArea.keys && myGameArea.keys[37]) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(4).gif') {
             document.getElementById('player').src = 'New Piskel (4).gif';
             console.log(document.getElementById('player').src)
         }
-    }
-    if (myGameArea.keys && myGameArea.keys[39]) {
-        left(); 
+    } else if (myGameArea.keys && myGameArea.keys[39]) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(5).gif') {
             document.getElementById('player').src = 'New Piskel (5).gif';
             console.log(document.getElementById('player').src);
 
         }
-    }
-    if (myGameArea.keys && myGameArea.keys[38]) {
-        up();
+    } else if (myGameArea.keys && myGameArea.keys[38]) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(7).gif') {
             document.getElementById('player').src = 'New Piskel (7).gif';
             console.log(document.getElementById('player').src);
 
         }
-    }
-
-
-    if (myGameArea.keys && myGameArea.keys[40]) {
-        down();
+    } else if (myGameArea.keys && myGameArea.keys[40]) {
         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(6).gif') {
             document.getElementById('player').src = 'New Piskel (6).gif';
             console.log(document.getElementById('player').src);
 
         }
+    } else {
+        document.getElementById('player').src = 'New Piskel (8).gif';
+        console.log('idle')
     }
-
-
+    console.log(myGameArea.keys)
     renderBlocks();
 
 }</script>
-    <img src="New Piskel (4).gif" id="player"/>
+    <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player"/></div><button onclick="openFullscreen()">Fullscreen</button>
 </body>
 </html>
