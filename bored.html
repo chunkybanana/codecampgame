@@ -116,7 +116,22 @@ function loadTiles(){
     addDetail(11, 9, 'twot');
     addDetail(16, 19, 'blic');
     addDetail(16, 21, 'tlic');
-
+    addDetail(12, 16, 'farm');
+    addDetail(13, 16, 'farm');
+    addDetail(14, 16, 'farm');
+    addDetail(15, 16, 'farm');
+    addDetail(16, 16, 'farm');
+    addDetail(12, 18, 'farm');
+    addDetail(13, 18, 'farm');
+    addDetail(14, 18, 'farm');
+    addDetail(15, 18, 'farm');
+    addDetail(16, 18, 'farm');
+    addDetail(7, 4, 'mbr');
+    addDetail(7, 5, 'mbr');
+    addDetail(7, 6, 'mbr');
+    addDetail(3, 4, 'mbl');
+    addDetail(3, 5, 'mbl');
+    addDetail(3, 3, 'mbl');
 }
 
 
@@ -278,6 +293,15 @@ function renderBlocks(){
                     break;
                 case 'twot':
                     imgs.src = 'Triple Wall Outside Top.png';
+                    break;
+                case 'mbl':
+                    imgs.src = 'Medbay Bed Texture (Left).PNG';
+                    break;
+                case 'mbr':
+                    imgs.src = 'Medbay Bed Texture (Right).PNG';
+                    break;
+                case 'farm':
+                    imgs.src = 'Greehouse Texture.PNG';
                     break;
             }
             ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
