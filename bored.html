@@ -116,16 +116,16 @@ function loadTiles(){
     addDetail(11, 9, 'twot');
     addDetail(16, 19, 'blic');
     addDetail(16, 21, 'tlic');
-    addDetail(12, 16, 'farm');
-    addDetail(13, 16, 'farm');
-    addDetail(14, 16, 'farm');
-    addDetail(15, 16, 'farm');
-    addDetail(16, 16, 'farm');
-    addDetail(12, 18, 'farm');
-    addDetail(13, 18, 'farm');
-    addDetail(14, 18, 'farm');
-    addDetail(15, 18, 'farm');
-    addDetail(16, 18, 'farm');
+    addDetail(12, 16, 'gl');
+    addDetail(13, 16, 'gm');
+    addDetail(14, 16, 'gm');
+    addDetail(15, 16, 'gm');
+    addDetail(16, 16, 'gr');
+    addDetail(12, 18, 'gl');
+    addDetail(13, 18, 'gm');
+    addDetail(14, 18, 'gm');
+    addDetail(15, 18, 'gm');
+    addDetail(16, 18, 'gr');
     addDetail(7, 4, 'mbr');
     addDetail(7, 5, 'mbr');
     addDetail(7, 6, 'mbr');
@@ -300,8 +300,14 @@ function renderBlocks(){
                 case 'mbr':
                     imgs.src = 'Medbay Bed Texture (Right).PNG';
                     break;
-                case 'farm':
-                    imgs.src = 'Greehouse Texture.PNG';
+                case 'gl':
+                    imgs.src = 'Left Greenhouse Texture.PNG';
+                    break;
+                case 'gm':
+                    imgs.src = 'Center Greenhouse Texture.PNG';
+                    break;
+                case 'gr':
+                    imgs.src = 'Right Greenhouse Texture.PNG';
                     break;
             }
             ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
