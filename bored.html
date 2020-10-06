@@ -46,6 +46,9 @@ function loadTiles(){
 
 
 }
+        function addDetail(xx, yy, src) {
+            blocks[(yy * width) + xx] = src;
+        }
         function addRoom(xx,yy,ww,hh,wt,wr,wb,wl) {
             for (var l = 0; l < ww; l++) {
                 for (var m = 0; m < hh; m++) {
