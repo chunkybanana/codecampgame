@@ -48,6 +48,24 @@ function loadTiles(){
     addRoom(15, 24, 1, 1, 0, 1, 0, 1);
     addRoom(25, 12, 5, 1, 0, 1, 0, 1);
 
+    addDetail(6, 2, "bric");
+    addDetail(11, 2, "blic");
+    addDetail(2, 5, "bric");
+    addDetail(16, 5, "blic");
+    addDetail(18, 5, "bric");
+    addDetail(20, 2, "bric");
+    addDetail(22, 2, "blic");
+    addDetail(2, 7, "tric");
+    addDetail(6, 13, "blic");
+    addDetail(8, 13, "bric");
+    addDetail(16, 13, "blic");
+    addDetail(18, 16, "tric");
+    addDetail(18, 18, "bric");
+    addDetail(24, 16, "tlic");
+    addDetail(24, 12, "blic");
+    addDetail(26, 12, "bric");
+    addDetail(8, 17, "bric");
+    addDetail(8, 24, "tric");
 
 }
         function addDetail(xx, yy, src) {
@@ -167,7 +185,18 @@ function renderBlocks(){
                 case 'brc':
                     imgs.src = 'Corner Wall Texture (Bottom Right).PNG';
                     break;
-
+                case 'bric':
+                    imgs.src = 'Inside Corner Wall (Bottom Right).PNG';
+                    break;
+                case 'blic':
+                    imgs.src = 'Inside Corner Wall (Bottom Left).PNG';
+                    break;
+                case 'tric':
+                    imgs.src = 'Inside Corner Wall (Top Right).PNG';
+                    break;
+                case 'tlic':
+                    imgs.src = 'Inside Corner Wall (Top Left).PNG';
+                    break;
             }
             ctx.drawImage(imgs, (tileDraw - xpos + 3) * 50, (rowDraw - ypos + 3) * 50, 50, 50);
         }
