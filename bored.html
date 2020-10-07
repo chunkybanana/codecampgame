@@ -27,8 +27,8 @@
 </head>
 <body onload="startGame()">
     <script>
-        var walkable = ['floor', 'tb', 'ep'];
-        var tasks = ['tb', 'ep'];
+        var walkable = ['floor', 'tb', 'ep','com','epf','comf'];
+        var tasks = ['tb', 'ep', 'com'];
         var blocks = [];
         var buttonset = Math.floor(Math.random() * 3)
         var xpos = 17, ypos = 3, height = 32, width = 32;
@@ -354,6 +354,12 @@ function renderBlocks(){
                 case 'com':
                     imgs.src = 'Comms Task Texture.PNG';
                     break;
+                case 'epf':
+                    imgs.src = 'Electrical Panel Floor Texture (Completed).PNG';
+                    break;
+                case 'comf':
+                    imgs.src = 'Floor Texture.PNG';
+                    break;
             }
             ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
         }
@@ -440,16 +446,16 @@ function up(){
             renderBlocks();
             if (myGameArea.keys && myGameArea.keys[32] && (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)])|| tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)])|| tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)])|| tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)]))) {
                 if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)])){
-                    blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] = 'floor';
+                    blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] = blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] + 'f';
                 }
                 if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)])) {
-                    blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] = 'floor';
+                    blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] + 'f';
                 }
                 if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)])) {
-                    blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] = 'floor';
+                    blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] + 'f';
                 }
                 if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)])) {
-                    blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] = 'floor';
+                    blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] + 'f';
                 }
             }
     if (myGameArea.keys && (myGameArea.keys[109] || myGameArea.keys[77])) {
