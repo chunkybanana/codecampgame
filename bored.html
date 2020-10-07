@@ -524,11 +524,26 @@
                 blocks[(width * (yy + ww)) + xx + hh] = 'brc';
             }
         }
+        var s;
         function startGame() {
             myGameArea.start();
-
+            s = new sound('Faded (online-audio-converter.com).mp3')
+            s.play();
         }
-
+        function sound(src) {
+            this.sound = document.createElement("audio");
+            this.sound.src = src;
+            this.sound.setAttribute("preload", "auto");
+            this.sound.setAttribute("controls", "none");
+            this.sound.style.display = "none";
+            document.body.appendChild(this.sound);
+            this.play = function () {
+                this.sound.play();
+            }
+            this.stop = function () {
+                this.sound.pause();
+            }
+        } 
         var myGameArea = {
             start: function () {
                 document.getElementById("canvas").width = 700;
@@ -695,7 +710,7 @@
                             imgs.src = 'Greenhouse Task.PNG';
                             break;
                         case 'ghf':
-                            imgs.src = 'Greenhouse Task (Completed).PNG';
+                            imgs.src = 'Greenhouse Task (completed).PNG';
                             break;
                         case 'sto':
                             imgs.src = 'Storage Task (New).PNG';
@@ -1032,7 +1047,7 @@
                         myGameArea.context.font = '100px Arial';
                         myGameArea.context.fillRect(100 + (150 * (m % 3)), 100 + (150 * (Math.floor(m / 3))), 100, 100);
                         myGameArea.context.fillStyle = 'black';
-                        myGameArea.context.fillText((m + 1) % 10, 100 + (150 * (m % 3)), 200 + (150 * (Math.floor(m / 3))));
+                        myGameArea.context.fillText((m + 1) % 10, 130 + (150 * (m % 3)), 190 + (150 * (Math.floor(m / 3))));
 
                         if (myGameArea.x && myGameArea.y) {
                             if (myGameArea.x > 100 && myGameArea.y > 100 && myGameArea.x < 200 && myGameArea.y < 200) {
@@ -1091,9 +1106,11 @@
                         }
                     }
                     myGameArea.context.fillStyle = 'black';
-                    myGameArea.context.font = '20px Arial'
-                    myGameArea.context.fillText("The passcode is " + pcode, 300,650);
-                    myGameArea.context.fillText(pcodeattempt, 200, 50);
+                    myGameArea.context.font = '50px Arial'
+                    myGameArea.context.fillText("The passcode is " + pcode, 210, 650);
+                    myGameArea.context.font = '100px Arial';
+
+                    myGameArea.context.fillText(pcodeattempt, 200, 90);
                     if (kpsf == 4) {
                         kpsf = 0;
                         if (pcodeattempt == pcode) {
