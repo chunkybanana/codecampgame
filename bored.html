@@ -27,135 +27,445 @@
 </head>
 <body onload="startGame()">
     <script>
-        var walkable = ['floor', 'tb', 'ep','com','epf','comf'];
-        var tasks = ['tb', 'ep', 'com'];
+        var walkable = ['floor', 'tb', 'ep', 'com', 'mbt', 'epf', 'comf', 'mbtf', 'gh', 'ghf', 'sto',  'stof','tsh','tshf','gw','rw','yw','ls','lsf','w','wf'];
+        var tasks = ['tb', 'ep', 'com','mbt','gh','sto','tsh','ls','w'];
         var blocks = [];
-        var buttonset = Math.floor(Math.random() * 3)
+        var screen = 0;
+        var start, message,mapnum;
+        var dx = new Date()
+
         var xpos = 17, ypos = 3, height = 32, width = 32;
-function loadTiles(){
+
+        function loadTiles() {
+
+            tasks = [];
 	for(var row = 0; row < height; row++){
 		for(var tile = 0; tile < width; tile++){
-				blocks.push('out');			
+				blocks[(width * row) + tile] = 'out';			
 		}
     }
-    addRoom(3, 3, 4, 5, 1, 1, 1, 1);
-    addRoom(14, 3, 4, 8, 1, 1, 1, 1);
-    addRoom(25, 3, 5, 4, 1, 1, 1, 1);
-    addRoom(3, 10, 5, 8, 1, 1, 1, 1);
-    addRoom(12, 10, 5, 6, 1, 1, 1, 1);
-    addRoom(11, 16, 3, 7, 1, 1, 1, 1);
-    addRoom(13, 22, 5, 5, 1, 1, 1, 1);
-    addRoom(23, 11, 3, 6, 1, 1, 1, 1);
+            if (mapnum == 0) {
+                addRoom(3, 3, 4, 5, 1, 1, 1, 1);
+                addRoom(14, 3, 4, 8, 1, 1, 1, 1);
+                addRoom(25, 3, 5, 4, 1, 1, 1, 1);
+                addRoom(3, 10, 5, 8, 1, 1, 1, 1);
+                addRoom(12, 10, 5, 6, 1, 1, 1, 1);
+                addRoom(11, 16, 3, 7, 1, 1, 1, 1);
+                addRoom(13, 22, 5, 5, 1, 1, 1, 1);
+                addRoom(23, 11, 3, 6, 1, 1, 1, 1);
 
-    addRoom(3, 7, 3, 1, 0, 1, 0, 1);
-    addRoom(19, 7, 21, 1, 0, 1, 1, 1);
-    addRoom(9, 15, 13, 1, 0, 1, 1, 1);
+                addRoom(3, 7, 3, 1, 0, 1, 0, 1);
+                addRoom(19, 7, 21, 1, 0, 1, 1, 1);
+                addRoom(9, 15, 13, 1, 0, 1, 1, 1);
 
-    addRoom(22, 3, 1, 3, 1, 0, 1, 0);
-    addRoom(8, 3, 1, 6, 1, 0, 1, 0);
-    addRoom(11, 14, 1, 1, 1, 0, 1, 0);
-    addRoom(18, 14, 1, 1, 1, 0, 1, 0);
-    addRoom(10, 18, 1, 1, 1, 0, 1, 0);
-    addRoom(10, 27, 1, 9, 1, 0, 1, 0);
-    addRoom(20, 19, 1, 8, 1, 1, 1, 0);
+                addRoom(22, 3, 1, 3, 1, 0, 1, 0);
+                addRoom(8, 3, 1, 6, 1, 0, 1, 0);
+                addRoom(11, 14, 1, 1, 1, 0, 1, 0);
+                addRoom(18, 14, 1, 1, 1, 0, 1, 0);
+                addRoom(10, 18, 1, 1, 1, 0, 1, 0);
+                addRoom(10, 27, 1, 9, 1, 0, 1, 0);
+                addRoom(20, 19, 1, 8, 1, 1, 1, 0);
 
-    addRoom(17, 19, 3, 1, 0, 1, 0, 1);
-    addRoom(17, 26, 1, 1, 0, 1, 0, 1);
-    addRoom(27, 14, 5, 1, 0, 1, 0, 1);
+                addRoom(17, 19, 3, 1, 0, 1, 0, 1);
+                addRoom(17, 26, 1, 1, 0, 1, 0, 1);
+                addRoom(27, 14, 5, 1, 0, 1, 0, 1);
 
-    addDetail(8, 4, "bric");
-    addDetail(13, 4, "blic");
-    addDetail(4, 7, "bric");
-    addDetail(18, 7, "blic");
-    addDetail(20, 7, "bric");
-    addDetail(22, 4, "bric");
-    addDetail(24, 4, "blic");
-    addDetail(4, 9, "tric");
-    addDetail(8, 15, "blic");
-    addDetail(10, 15, "bric");
-    addDetail(18, 15, "blic");
-    addDetail(20, 18, "tric");
-    addDetail(20, 20, "bric");
-    addDetail(26, 18, "tlic");
-    addDetail(26, 14, "blic");
-    addDetail(28, 14, "bric");
-    addDetail(10, 19, "bric");
-    addDetail(10, 26, "tric");
-    addDetail(11, 15, 'dwh');
-    addDetail(12, 15, 'dwh');
-    addDetail(13, 15, 'dwh');
-    addDetail(14, 15, 'dwh');
-    addDetail(15, 15, 'dwh');
-    addDetail(16, 15, 'dwh');
-    addDetail(17, 15, 'dwh');
-    addDetail(13, 26, 'dwh');
-    addDetail(14, 26, 'dwh');
-    addDetail(15, 26, 'dwh');
-    addDetail(18, 25, 'dwv');
-    addDetail(18, 24, 'dwv');
-    addDetail(18, 23, 'dwv');
-    addDetail(18, 22, 'dwv');
-    addDetail(18, 21, 'dwv');
-    addDetail(18, 20, 'dwv');
-    addDetail(18, 19, 'dwv');
-    addDetail(18, 18, 'dwv');
-    addDetail(18, 17, 'dwv');
-    addDetail(18, 16, 'dwv');
-    addDetail(18, 12, 'dwv');
-    addDetail(18, 11, 'dwv');
-    addDetail(18, 10, 'dwv');
-    addDetail(10, 16, 'dwv');
-    addDetail(11, 12, 'dwv');
-    addDetail(11, 11, 'dwv');
-    addDetail(11, 10, 'dwv');
-    addDetail(11, 13, 'dwet');
-    addDetail(18, 13, 'dwet');
-    addDetail(18, 26, 'dwet');
-    addDetail(10, 17, 'dwet');
-    addDetail(16, 26, 'dwel');
-    addDetail(12, 26, 'twb');
-    addDetail(18, 9, 'twr');
-    addDetail(11, 9, 'twot');
-    addDetail(16, 19, 'blic');
-    addDetail(16, 21, 'tlic');
-    addDetail(12, 16, 'gl');
-    addDetail(13, 16, 'gm');
-    addDetail(14, 16, 'gm');
-    addDetail(15, 16, 'gm');
-    addDetail(16, 16, 'gr');
-    addDetail(12, 18, 'gl');
-    addDetail(13, 18, 'gm');
-    addDetail(14, 18, 'gm');
-    addDetail(15, 18, 'gm');
-    addDetail(16, 18, 'gr');
-    addDetail(7, 4, 'mbr');
-    addDetail(7, 5, 'mbr');
-    addDetail(7, 6, 'mbr');
-    addDetail(3, 4, 'mbl');
-    addDetail(3, 5, 'mbl');
-    addDetail(3, 3, 'mbl');
-    addDetail(14, 4, 't');
-    addDetail(14, 6, 't');
-    addDetail(16, 3, 't');
-    addDetail(16, 5, 't');
-    addDetail(18, 4, 't');
-    addDetail(18, 6, 't');
-    addDetail(20, 3, 't');
-    addDetail(20, 5, 't');
+                addDetail(8, 4, "bric");
+                addDetail(13, 4, "blic");
+                addDetail(4, 7, "bric");
+                addDetail(18, 7, "blic");
+                addDetail(20, 7, "bric");
+                addDetail(22, 4, "bric");
+                addDetail(24, 4, "blic");
+                addDetail(4, 9, "tric");
+                addDetail(8, 15, "blic");
+                addDetail(10, 15, "bric");
+                addDetail(18, 15, "blic");
+                addDetail(20, 18, "tric");
+                addDetail(20, 20, "bric");
+                addDetail(26, 18, "tlic");
+                addDetail(26, 14, "blic");
+                addDetail(28, 14, "bric");
+                addDetail(10, 19, "bric");
+                addDetail(10, 26, "tric");
+                addDetail(11, 15, 'dwh');
+                addDetail(12, 15, 'dwh');
+                addDetail(13, 15, 'dwh');
+                addDetail(14, 15, 'dwh');
+                addDetail(15, 15, 'dwh');
+                addDetail(16, 15, 'dwh');
+                addDetail(17, 15, 'dwh');
+                addDetail(13, 26, 'dwh');
+                addDetail(14, 26, 'dwh');
+                addDetail(15, 26, 'dwh');
+                addDetail(18, 25, 'dwv');
+                addDetail(18, 24, 'dwv');
+                addDetail(18, 23, 'dwv');
+                addDetail(18, 22, 'dwv');
+                addDetail(18, 21, 'dwv');
+                addDetail(18, 20, 'dwv');
+                addDetail(18, 19, 'dwv');
+                addDetail(18, 18, 'dwv');
+                addDetail(18, 17, 'dwv');
+                addDetail(18, 16, 'dwv');
+                addDetail(18, 12, 'dwv');
+                addDetail(18, 11, 'dwv');
+                addDetail(18, 10, 'dwv');
+                addDetail(10, 16, 'dwv');
+                addDetail(11, 12, 'dwv');
+                addDetail(11, 11, 'dwv');
+                addDetail(11, 10, 'dwv');
+                addDetail(11, 13, 'dwet');
+                addDetail(18, 13, 'dwet');
+                addDetail(18, 26, 'dwet');
+                addDetail(10, 17, 'dwet');
+                addDetail(16, 26, 'dwel');
+                addDetail(12, 26, 'twb');
+                addDetail(18, 9, 'twr');
+                addDetail(11, 9, 'twot');
+                addDetail(16, 19, 'blic');
+                addDetail(16, 21, 'tlic');
+                addDetail(12, 16, 'gl');
+                addDetail(13, 16, 'gm');
+                addDetail(14, 16, 'gm');
+                addDetail(15, 16, 'gm');
+                addDetail(16, 16, 'gr');
+                addDetail(12, 18, 'gl');
+                addDetail(13, 18, 'gm');
+                addDetail(14, 18, 'gm');
+                addDetail(15, 18, 'gm');
+                addDetail(16, 18, 'gr');
+                addDetail(7, 4, 'mbr');
+                addDetail(7, 5, 'mbr');
+                addDetail(7, 6, 'mbr');
+                addDetail(3, 4, 'mbl');
+                addDetail(3, 5, 'mbl');
+                addDetail(3, 3, 'mbl');
+                addDetail(14, 4, 't');
+                addDetail(14, 6, 't');
+                addDetail(16, 3, 't');
+                addDetail(16, 5, 't');
+                addDetail(18, 4, 't');
+                addDetail(18, 6, 't');
+                addDetail(20, 3, 't');
+                addDetail(20, 5, 't');
 
-    addDetail(14, 10, 'ep');
-    addDetail(27, 11, 'com');
+                for (var q = 0; q < 5; q++) {
+                    var rand = Math.floor(Math.random() * 8);
+                    var taskchoice;
+                    switch (rand) {
+                        case 0:
+                            taskchoice = 'ep';
+                            break;
+                        case 1:
+                            taskchoice = 'ls';
+                            break;
+                        case 2:
+                            taskchoice = 'com';
+                            break;
+                        case 3:
+                            taskchoice = 'mbt';
+                            break;
+                        case 4:
+                            taskchoice = 'gh';
+                            break;
+                        case 5:
+                            taskchoice = 'sto';
+                            break;
+                        case 6:
+                            taskchoice = 'tsh';
+                            break;
+                        case 7:
+                            taskchoice = 'w';
+                            break;
+                    }
+                    if (tasks.includes(taskchoice)) {
+                        q -= 1;
+                    } else {
+                        tasks.push(taskchoice);
+                    }
+                }
+                if (tasks.includes('ep')) {
+                    addDetail(14, 10, 'ep');
+                } else {
+                    addDetail(14, 10, 'epf');
+                }
+                if (tasks.includes('ls')) {
+                    addDetail(14, 25, 'ls');
+                } else {
+                    addDetail(14, 25, 'lsf');
+                }
+                if (tasks.includes('com')) {
+                    addDetail(27, 11, 'com');
+                } else {
+                    addDetail(27, 11, 'comf');
+                }
+                if (tasks.includes('mbt')) {
+                    addDetail(5, 3, 'mbt');
+                } else {
+                    addDetail(5, 3, 'mbtf');
+                }
+                if (tasks.includes('gh')) {
+                    addDetail(11, 16, 'gh');
+                } else {
+                    addDetail(11, 16, 'ghf');
+                }
+                if (tasks.includes('sto')) {
+                    addDetail(7, 11, 'sto');
+                } else {
+                    addDetail(7, 11, 'stof');
+                }
+                if (tasks.includes('tsh')) {
+                    addDetail(21, 6, 'tsh');
+                } else {
+                    addDetail(21, 6, 'tshf');
+                }
+                if (tasks.includes('w')) {
+                    addDetail(26, 3, 'w');
+                } else {
+                    addDetail(26, 3, 'wf');
+                }
 
-    addDetail(4, 14, 'c');
-    addDetail(5, 12, 'c');
-    addDetail(6, 12, 'c');
-    addDetail(7, 12, 'c');
-    addDetail(6, 11, 'c');
-    addDetail(8, 11, 'c');
-    addDetail(8, 10, 'c');
-    addDetail(9, 11, 'c');
-    addDetail(9, 10, 'c');
+                addDetail(15, 12, 'ept');
+                addDetail(15, 11, 'yw');
+                addDetail(15, 10, 'yw');
+                addDetail(15, 13, 'rw');
+                addDetail(15, 14, 'rw');
+                addDetail(16, 12, 'gw');
+                addDetail(17, 12, 'gw');
 
+                addDetail(28, 3, 'te');
+                addDetail(28, 4, 'tm');
+                addDetail(28, 5, 'tm');
+                addDetail(28, 6, 'tm');
+
+                addDetail(26, 11, 'comf');
+                addDetail(25, 11, 'comf');
+                addDetail(24, 11, 'comf');
+
+                addDetail(13, 25, 'lsf');
+                addDetail(15, 25, 'lsf');
+                addDetail(16, 25, 'lsf');
+
+
+                addDetail(4, 14, 'c');
+                addDetail(5, 12, 'c');
+                addDetail(6, 12, 'c');
+                addDetail(7, 12, 'c');
+                addDetail(6, 11, 'c');
+                addDetail(8, 11, 'c');
+                addDetail(8, 10, 'c');
+                addDetail(9, 11, 'c');
+                addDetail(9, 10, 'c');
+            }
+            if (mapnum == 1) {
+                addRoom(3, 3, 6, 4, 1, 1, 1, 1);
+                addRoom(8, 6, 3, 7, 1, 1, 1, 1);
+                addRoom(23, 3, 3, 4, 1, 1, 1, 1);
+                addRoom(25, 10, 5, 4, 1, 1, 1, 1);
+                addRoom(4, 12, 6, 4, 1, 1, 1, 1);
+                addRoom(9, 17, 6, 4, 1, 1, 1, 1);
+                addRoom(3, 21, 6, 3, 1, 1, 1, 1);
+                addRoom(22, 21, 4, 5, 1, 1, 1, 1);
+
+                addRoom(15, 7, 1, 8, 1, 0, 1, 0);
+                addRoom(18, 8, 8, 1, 0, 1, 1, 1);
+                addRoom(23, 6, 9, 1, 0, 1, 1, 1);
+                addRoom(8, 15, 1, 11, 1, 0, 1, 0);
+                addRoom(14, 16, 13, 1, 0, 1, 1, 1);
+                addRoom(15, 26, 1, 12, 1, 1, 1, 0);
+                addRoom(4, 28, 1, 11, 1, 1, 1, 1);
+
+                addDetail(7, 5, 'twl');
+                addDetail(7, 6, 'dwet');
+                addDetail(7, 7, 'floor');
+                addDetail(7, 8, 'dweb');
+                addDetail(7, 9, 'twob');
+                addDetail(15, 6, 'tric');
+                addDetail(15, 8, 'bric');
+                addDetail(19, 8, 'bric');
+                addDetail(17, 8, 'blic');
+                addDetail(22, 6, 'tlic');
+                addDetail(22, 7, 'floor');
+                addDetail(22, 8, 'blic');
+                addDetail(24, 6, 'bric');
+                addDetail(24, 10, 'dwv');
+                addDetail(24, 11, 'dwv');
+                addDetail(24, 12, 'dwv');
+                addDetail(24, 13, 'dwet');
+                addDetail(24, 14, 'floor');
+                addDetail(24, 15, 'bwall');
+                addDetail(18, 14, 'floor');
+                addDetail(17, 14, 'tlic');
+                addDetail(8, 14, 'tric');
+                addDetail(8, 16, 'bric');
+                addDetail(8, 18, 'twr');
+                addDetail(8, 17, 'dwv');
+                addDetail(9, 16, 'dwel');
+                addDetail(10, 16, 'floor');
+                addDetail(11, 16, 'dwer');
+                addDetail(12, 16, 'dwh');
+                addDetail(13, 16, 'blic');
+                addDetail(13, 17, 'dwv');
+                addDetail(13, 18, 'dwv');
+                addDetail(13, 19, 'dwv');
+                addDetail(13, 20, 'dwv');
+                addDetail(13, 21, 'dwv');
+                addDetail(13, 22, 'dwv');
+                addDetail(13, 23, 'twr');
+                addDetail(15, 16, 'bric');
+                addDetail(15, 25, 'tric');
+                addDetail(15, 27, 'bric');
+                addDetail(21, 25, 'twb');
+                addDetail(22, 25, 'dwh');
+                addDetail(23, 25, 'dwh');
+                addDetail(24, 25, 'dwh');
+                addDetail(25, 25, 'dwel');
+                addDetail(26, 25, 'floor');
+                addDetail(27, 25, 'rwall');
+                addDetail(13, 27, 'tlic');
+                addDetail(14, 27, 'floor');
+                addDetail(3, 27, 'blic');
+                addDetail(4, 27, 'floor');
+                addDetail(5, 27, 'dwer');
+                addDetail(6, 27, 'twb');
+                addDetail(24, 9, 'twl');
+                addDetail(5, 3, 't');
+                addDetail(5, 5, 't');
+                addDetail(5, 7, 't');
+                addDetail(3, 4, 't');
+                addDetail(3, 6, 't');
+                addDetail(3, 8, 't');
+                addDetail(8, 6, 'gl');
+                addDetail(9, 6, 'gm');
+                addDetail(10, 6, 'gm');
+                addDetail(11, 6, 'gm');
+                addDetail(12, 6, 'gm');
+                addDetail(13, 6, 'gr');
+                addDetail(8, 8, 'gl');
+                addDetail(9, 8, 'gm');
+                addDetail(10, 8, 'gm');
+                addDetail(11, 8, 'gm');
+                addDetail(12, 8, 'gm');
+                addDetail(13, 8, 'gr');
+                addDetail(23, 3, 'comf');
+                addDetail(25, 3, 'comf');
+                addDetail(26, 3, 'comf');
+                addDetail(26, 10, 'yw');
+                addDetail(26, 11, 'yw');
+                addDetail(26, 12, 'ept');
+                addDetail(26, 13, 'rw');
+                addDetail(26, 14, 'rw');
+                addDetail(27, 12, 'gw');
+                addDetail(28, 12, 'gw');
+                addDetail(22, 21, 'c');
+                addDetail(22, 22, 'c');
+                addDetail(22, 23, 'c');
+                addDetail(23, 22, 'c');
+                addDetail(25, 22, 'c');
+                addDetail(25, 21, 'c');
+                addDetail(24, 24, 'c');
+                addDetail(12, 19, 'te');
+                addDetail(12, 20, 'tm');
+                addDetail(12, 21, 'tm');
+                addDetail(12, 22, 'tm');
+                addDetail(4, 12, 'mbl');
+                addDetail(4, 13, 'mbl');
+                addDetail(4, 14, 'mbl');
+                addDetail(4, 16, 'mbl');
+                addDetail(4, 17, 'mbl');
+                addDetail(7, 12, 'mbr');
+                addDetail(7, 13, 'mbr');
+                addDetail(7, 14, 'mbr');
+                addDetail(7, 16, 'mbr');
+                addDetail(7, 17, 'mbr');
+                addDetail(3, 21, 'lsf');
+                addDetail(5, 21, 'lsf');
+
+                for (var q = 0; q < 5; q++) {
+                    var rand = Math.floor(Math.random() * 8);
+                    var taskchoice;
+                    switch (rand) {
+                        case 0:
+                            taskchoice = 'ep';
+                            break;
+                        case 1:
+                            taskchoice = 'ls';
+                            break;
+                        case 2:
+                            taskchoice = 'com';
+                            break;
+                        case 3:
+                            taskchoice = 'mbt';
+                            break;
+                        case 4:
+                            taskchoice = 'gh';
+                            break;
+                        case 5:
+                            taskchoice = 'sto';
+                            break;
+                        case 6:
+                            taskchoice = 'tsh';
+                            break;
+                        case 7:
+                            taskchoice = 'w';
+                            break;
+                    }
+                    if (tasks.includes(taskchoice)) {
+                        q -= 1;
+                    } else {
+                        tasks.push(taskchoice);
+                    }
+                }
+                if (tasks.includes('ep')) {
+                    addDetail(27, 14, 'ep');
+                } else {
+                    addDetail(27, 14, 'epf');
+                }
+                if (tasks.includes('ls')) {
+                    addDetail(4, 21, 'ls');
+                } else {
+                    addDetail(4, 21, 'lsf');
+                }
+                if (tasks.includes('com')) {
+                    addDetail(24, 3, 'com');
+                } else {
+                    addDetail(24, 3, 'comf');
+                }
+                if (tasks.includes('mbt')) {
+                    addDetail(4, 15, 'mbt');
+                } else {
+                    addDetail(4, 15, 'mbtf');
+                }
+                if (tasks.includes('gh')) {
+                    addDetail(14, 6, 'gh');
+                } else {
+                    addDetail(14, 6, 'ghf');
+                }
+                if (tasks.includes('sto')) {
+                    addDetail(26, 21, 'sto');
+                } else {
+                    addDetail(26, 21, 'stof');
+                }
+                if (tasks.includes('tsh')) {
+                    addDetail(6, 3, 'tsh');
+                } else {
+                    addDetail(6, 3, 'tshf');
+                }
+                if (tasks.includes('w')) {
+                    addDetail(9, 17, 'w');
+                } else {
+                    addDetail(9, 17, 'wf');
+                }
+
+
+
+
+
+
+
+
+            }
 }
 
 
@@ -214,11 +524,9 @@ function loadTiles(){
         }
 function startGame() {
     myGameArea.start();
-    loadTiles();
-    renderBlocks();
 
 }
-
+        
 var myGameArea = {
     start : function() {
         document.getElementById("canvas").width = 700;
@@ -252,7 +560,7 @@ function renderBlocks(){
 
 		var rowDraw = Math.floor(l / width);
         var tileDraw = l % width;
-        if ((tileDraw - xpos + 3) * 100 <= 775 && (tileDraw - xpos + 3) * 100 >= -75 && (rowDraw - ypos + 3) * 100 <= 775 && (rowDraw - ypos + 3) * 100 >= -75) {
+        if ((tileDraw - xpos + 3) * 100 <= 800 && (tileDraw - xpos + 3) * 100 >= -100 && (rowDraw - ypos + 3) * 100 <= 800 && (rowDraw - ypos + 3) * 100 >= -100) {
             var imgs = new Image();
             switch (blocks[l]) {
                 case 'out':
@@ -309,14 +617,29 @@ function renderBlocks(){
                 case 'dwel':
                     imgs.src = 'Double Wall End (Left).PNG';
                     break;
+                case 'dwer':
+                    imgs.src = 'Double Wall End (Right).PNG';
+                    break;
+                case 'dweb':
+                    imgs.src = 'Double Wall End (Bottom).PNG';
+                    break;
                 case 'twb':
                     imgs.src = 'Triple Wall Bottom.png';
+                    break;
+                case 'twt':
+                    imgs.src = 'Triple Wall Top.png';
                     break;
                 case 'twr':
                     imgs.src = 'Triple Wall Right.png';
                     break;
+                case 'twl':
+                    imgs.src = 'Triple Wall Left.png';
+                    break;
                 case 'twot':
                     imgs.src = 'Triple Wall Outside Top.png';
+                    break;
+                case 'twob':
+                    imgs.src = 'Triple Wall Outside Bottom.png';
                     break;
                 case 'mbl':
                     imgs.src = 'Medbay Bed Texture (Left).PNG';
@@ -358,7 +681,61 @@ function renderBlocks(){
                     imgs.src = 'Electrical Panel Floor Texture (Completed).PNG';
                     break;
                 case 'comf':
-                    imgs.src = 'Floor Texture.PNG';
+                    imgs.src = 'Comms Task Complete.png';
+                    break;
+                case 'mbt':
+                    imgs.src = 'Med Task.png';
+                    break;
+                case 'mbtf':
+                    imgs.src = 'Med Task Complete.png';
+                    break;
+                case 'gh':
+                    imgs.src = 'Farm Task.png';
+                    break;
+                case 'ghf':
+                    imgs.src = 'Greenhouse Task Complete.png';
+                    break;
+                case 'sto':
+                    imgs.src = 'Storage Task.png';
+                    break;
+                case 'stof':
+                    imgs.src = 'Storage Crate Texture.PNG';
+                    break;
+                case 'tsh':
+                    imgs.src = 'Trashcan.png';
+                    break;
+                case 'tshf':
+                    imgs.src = 'Trashcan Complete.png';
+                    break;
+                case 'gw':
+                    imgs.src = 'Green Wire.png';
+                    break;
+                case 'rw':
+                    imgs.src = 'Red Wire.png';
+                    break;
+                case 'yw':
+                    imgs.src = 'Yellow Wire.png';
+                    break;
+                case 'ept':
+                    imgs.src = 'Electrical Panel.png';
+                    break;
+                case 'ls':
+                    imgs.src = 'Comms Task Texture.PNG';
+                    break;
+                case 'lsf':
+                    imgs.src = 'Life Support Done.png';
+                    break;
+                case 'w':
+                    imgs.src = 'Weapons Task.png';
+                    break;
+                case 'wf':
+                    imgs.src = 'Weapons Task Complete.png';
+                    break;
+                case 'te':
+                    imgs.src = 'Torpedo Front.png';
+                    break;
+                case 'tm':
+                    imgs.src = 'Torpedo Middle.png';
                     break;
             }
             ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
@@ -367,36 +744,36 @@ function renderBlocks(){
 }
 
 function left() {
-    if (walkable.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.25)]) && walkable.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.25)])) {
+    if (walkable.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.125)]) && walkable.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.125)])) {
 
-        xpos += 0.25;
+        xpos += 0.125;
         if (xpos >= width - 1) {
             xpos = width - 1;
         }
     }
 }
         function right() {
-            if (walkable.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.25)]) && walkable.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.25)])) {
+            if (walkable.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.125)]) && walkable.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.125)])) {
 
-                xpos -= 0.25;
+                xpos -= 0.125;
                 if (xpos <= 0) {
                     xpos = 0;
                 }
             }
 }
 function up(){
-    if (walkable.includes(blocks[(Math.floor(ypos - 0.25) * width) + Math.floor(xpos)]) && walkable.includes(blocks[(Math.floor(ypos - 0.25) * width) + Math.ceil(xpos)])) {
+    if (walkable.includes(blocks[(Math.floor(ypos - 0.125) * width) + Math.floor(xpos)]) && walkable.includes(blocks[(Math.floor(ypos - 0.125) * width) + Math.ceil(xpos)])) {
 
-        ypos -= 0.25;
+        ypos -= 0.125;
         if (ypos <= 0) {
             ypos = 0;
         }
     }
 }
         function down() {
-            if (walkable.includes(blocks[(Math.ceil(ypos + 0.25) * width) + Math.floor(xpos)]) && walkable.includes(blocks[(Math.ceil(ypos + 0.25) * width) + Math.ceil(xpos)])) {
+            if (walkable.includes(blocks[(Math.ceil(ypos + 0.125) * width) + Math.floor(xpos)]) && walkable.includes(blocks[(Math.ceil(ypos + 0.125) * width) + Math.ceil(xpos)])) {
 
-                ypos += 0.25;
+                ypos += 0.125;
                 if (ypos >= height) {
                     ypos = height;
                 }
@@ -405,81 +782,153 @@ function up(){
 
         function updateGameArea() {
     myGameArea.clear();
-    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
-        right();
-    }
-    if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
-        left(); 
-    }
-    if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
-        up();
-    }
-    if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
-        down();
-    }
+            if (screen == 0) {
+                var bImage = new Image();
+                bImage.src = 'Title Screen.png'
+                myGameArea.context.drawImage(bImage, 0, 0, 700, 700);
+                if (message) {
+                    myGameArea.context.fillStyle = 'black'
+                    myGameArea.context.font = '25px Arial';
+                    myGameArea.context.fillText(message, 0, 600)
+                }
+                document.getElementById('player').style.opacity = 0;
+                if (myGameArea.x && myGameArea.y && myGameArea.x > 286 && myGameArea.y > 286 && myGameArea.x < 413 && myGameArea.y < 413) {
+                    mapnum = Math.floor(Math.random() * 2)
+                    loadTiles();
+                    screen = 1;
+                    if (mapnum == 0) {
+                        xpos = 17;
+                        ypos = 3;
+                    }
+                    if (mapnum == 1) {
+                        xpos = 4;
+                        ypos = 4;
+                    }
+                    dx = new Date()
+                    start = dx.getTime();
+                }
+                if (myGameArea.x && myGameArea.y && myGameArea.x > 204.5 && myGameArea.y > 440.5 && myGameArea.x < 495 && myGameArea.y < 514.5) {
+                    screen = 2;
+                    console.log(screen);
+                }
+            } else if (screen == 1) {
 
-    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
-        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(4).gif') {
-            document.getElementById('player').src = 'New Piskel (4).gif';
-        }
-    } else if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
-        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(5).gif') {
-            document.getElementById('player').src = 'New Piskel (5).gif';
+                if (myGameArea.keys && (myGameArea.keys[109] || myGameArea.keys[77])) {
+                    var map = new Image();
+                    if (mapnum == 0) {
+                        map.src = "map.png";
+                    }
 
-        }
-    } else if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
-        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(7).gif') {
-            document.getElementById('player').src = 'New Piskel (7).gif';
+                    if (mapnum == 1) {
+                        map.src = "map-1.png";
+                    }
+                    myGameArea.context.drawImage(map, 0, 0, 700, 700)
+                    document.getElementById('player').style.opacity = 0;
+                    myGameArea.context.fillStyle = 'yellow';
+                    myGameArea.context.fillRect(xpos * 700 / 32, ypos * 700 / 32, 700 / 32, 700 / 32);
+                    myGameArea.context.fillStyle = 'red';
 
-        }
-    } else if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
-        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(6).gif') {
-            document.getElementById('player').src = 'New Piskel (6).gif';
+                    for (var cnf = 0; cnf < blocks.length; cnf++) {
+                        for (var l = 0; l < tasks.length; l++) {
+                            if (blocks[cnf] == tasks[l]) {
+                                myGameArea.context.fillRect(cnf % width * 700 / 32, Math.floor(cnf / width) * 700 / 32, 700 / 32, 700 / 32);
 
-        }
-    } else {
-        document.getElementById('player').src = 'New Piskel (8).gif';
+                            }
+                        }
+                    }
+                } else {
+                    document.getElementById('player').style.opacity = 'inherit';
+                    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
+                        right();
+                    }
+                    if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
+                        left();
+                    }
+                    if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
+                        up();
+                    }
+                    if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
+                        down();
+                    }
+
+                    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
+                        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(4).gif') {
+                            document.getElementById('player').src = 'New Piskel (4).gif';
+                        }
+                    } else if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
+                        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(5).gif') {
+                            document.getElementById('player').src = 'New Piskel (5).gif';
+
+                        }
+                    } else if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
+                        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(7).gif') {
+                            document.getElementById('player').src = 'New Piskel (7).gif';
+
+                        }
+                    } else if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
+                        if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(6).gif') {
+                            document.getElementById('player').src = 'New Piskel (6).gif';
+
+                        }
+                    } else {
+                        document.getElementById('player').src = 'New Piskel (8).gif';
+                    }
+
+                    renderBlocks();
+                    if (myGameArea.keys && myGameArea.keys[32] && (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)]))) {
+                        if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)])) {
+                            blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] = blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] + 'f';
+                        }
+                        if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)])) {
+                            blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] + 'f';
+                        }
+                        if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)])) {
+                            blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] + 'f';
+                        }
+                        if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)])) {
+                            blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] + 'f';
+                        }
+                    }
+                    var check = 0;
+                    for (var cnf = 0; cnf < blocks.length; cnf++) {
+                        for (var l = 0; l < tasks.length; l++) {
+                            if (blocks[cnf] == tasks[l]) {
+                                check = 1;
+                            }
+                        }
+                    }
+                    myGameArea.context.font = '30px Arial'
+                    myGameArea.context.fillStyle = 'white'
+                    var d = new Date();
+                    var s = (Math.floor((d.getTime() - start) / 1000) % 60)
+                    var m = Math.floor(Math.floor((d.getTime() - start) / 1000) / 60)
+                    if (s < 10) {
+                        myGameArea.context.fillText(m + ':0' + s, 625, 25)
+                    }
+                    if (s >= 10) {
+                        myGameArea.context.fillText(m + ':' + s, 625, 25)
+                    }
+                    if (check == 0) {
+                        if (s < 10) {
+                            message = 'Your time: ' + m + ':0' + s + '.Try again?'
+                        }
+                        if (s >= 10) {
+                            message = 'Your time: ' + m + ':' + s + '.Try again?'
+                        }
+                        screen = 0;
+                    }
+                }
+            } else if (screen == 2) {
+                var bImage = new Image();
+                bImage.src = 'How to play.png'
+                myGameArea.context.drawImage(bImage, 0, 0, 700, 700);
+                document.getElementById('player').style.opacity = 0;
+                if (myGameArea.x && myGameArea.y && myGameArea.x > 505 && myGameArea.y > 619 && myGameArea.x < 631.5 && myGameArea.y < 674) {
+                    screen = 0;
+                }
             }
-            if (myGameArea.keys && (myGameArea.keys[99] || myGameArea.keys[67])) {
-                console.log(xpos, ypos);
-            }
-            renderBlocks();
-            if (myGameArea.keys && myGameArea.keys[32] && (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)])|| tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)])|| tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)])|| tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)]))) {
-                if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)])){
-                    blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] = blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] + 'f';
-                }
-                if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)])) {
-                    blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] + 'f';
-                }
-                if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)])) {
-                    blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] + 'f';
-                }
-                if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)])) {
-                    blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] + 'f';
-                }
-            }
-    if (myGameArea.keys && (myGameArea.keys[109] || myGameArea.keys[77])) {
-        var map = new Image();
-        map.src = "map.png";
-        myGameArea.context.drawImage(map, 0, 0, 700, 700)
-        document.getElementById('player').style.opacity = 0;
-        myGameArea.context.fillStyle = 'yellow';
-        myGameArea.context.fillRect(xpos * 700 / 32, ypos * 700 / 32, 700 / 32, 700 / 32);
-        myGameArea.context.fillStyle = 'red';
-
-        for (var cnf = 0; cnf < blocks.length; cnf++) {
-            for (var l = 0; l < tasks.length; l++) {
-                if (blocks[cnf] == tasks[l]) {
-                    myGameArea.context.fillRect(cnf % width * 700 / 32, Math.floor(cnf / width) * 700 / 32, 700 / 32, 700 / 32);
-
-                }
-            }
         }
-    } else {
-        document.getElementById('player').style.opacity = 'inherit';
-
-    }
-}</script>
+    </script>
     <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player"/></div><button onclick="openFullscreen()">Fullscreen</button>
 </body>
 </html>
