@@ -11,6 +11,7 @@
             image-rendering: pixelated;
             image-rendering: crisp-edges;
         }
+
         img {
             transform: translate(-482px,-226px);
             width: 260px;
@@ -19,31 +20,31 @@
             image-rendering: pixelated;
             image-rendering: crisp-edges;
         }
-        #game{
+
+        #game {
             height: 702px;
             width: 1100px;
         }
     </style>
 </head>
 <body onload="startGame()">
-    <script>
-        var walkable = ['floor', 'tb', 'ep', 'com', 'mbt', 'epf', 'comf', 'mbtf', 'gh', 'ghf', 'sto',  'stof','tsh','tshf','gw','rw','yw','ls','lsf','w','wf'];
-        var tasks = ['tb', 'ep', 'com','mbt','gh','sto','tsh','ls','w'];
+    <script>var walkable = ['floor', 'tb', 'ep', 'com', 'mbt', 'epf', 'comf', 'mbtf', 'gh', 'ghf', 'sto', 'stof', 'tsh', 'tshf', 'gw', 'rw', 'yw', 'ls', 'lsf', 'w', 'wf'];
+        var tasks = ['tb', 'ep', 'com', 'mbt', 'gh', 'sto', 'tsh', 'ls', 'w'];
         var blocks = [];
         var screen = 0;
-        var start, message,mapnum;
+        var start, message, mapnum, task;
         var dx = new Date()
 
-        var xpos = 17, ypos = 3, height = 32, width = 32;
+        var xpos = 17, ypos = 3, height = 32, width = 32, arr;
 
         function loadTiles() {
 
             tasks = [];
-	for(var row = 0; row < height; row++){
-		for(var tile = 0; tile < width; tile++){
-				blocks[(width * row) + tile] = 'out';			
-		}
-    }
+            for (var row = 0; row < height; row++) {
+                for (var tile = 0; tile < width; tile++) {
+                    blocks[(width * row) + tile] = 'out';
+                }
+            }
             if (mapnum == 0) {
                 addRoom(3, 3, 4, 5, 1, 1, 1, 1);
                 addRoom(14, 3, 4, 8, 1, 1, 1, 1);
@@ -466,7 +467,7 @@
 
 
             }
-}
+        }
 
 
         function openFullscreen() {
@@ -483,7 +484,7 @@
         function addDetail(xx, yy, src) {
             blocks[(yy * width) + xx] = src;
         }
-        function addRoom(xx,yy,ww,hh,wt,wr,wb,wl) {
+        function addRoom(xx, yy, ww, hh, wt, wr, wb, wl) {
             for (var l = 0; l < ww; l++) {
                 for (var m = 0; m < hh; m++) {
                     blocks[(width * (yy + l)) + xx + m] = 'floor';
@@ -516,242 +517,242 @@
                 blocks[(width * (yy + ww)) + xx - 1] = 'blc';
             }
             if (wt && wr) {
-                blocks[(width * (yy - 1)) + xx +  hh] = 'trc';
+                blocks[(width * (yy - 1)) + xx + hh] = 'trc';
             }
             if (wb && wr) {
                 blocks[(width * (yy + ww)) + xx + hh] = 'brc';
             }
         }
-function startGame() {
-    myGameArea.start();
+        function startGame() {
+            myGameArea.start();
 
-}
-        
-var myGameArea = {
-    start : function() {
-        document.getElementById("canvas").width = 700;
-        document.getElementById("canvas").height = 700;
-        this.context = document.getElementById("canvas").getContext("2d");
-        this.interval = setInterval(updateGameArea, 50);
-        window.addEventListener('keydown', function (e) {
-            myGameArea.keys = (myGameArea.keys || []);
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-        window.addEventListener('keyup', function (e) {
-            myGameArea.keys[e.keyCode] = (e.type == "keydown");
-        })
-        window.addEventListener('mousedown', function (e) {
-      myGameArea.x = e.pageX;
-      myGameArea.y = e.pageY;
+        }
 
-    })
-    window.addEventListener('mouseup', function (e) {
-      myGameArea.x = false;
-      myGameArea.y = false;
-    })
-    },
-    clear : function(){
-        this.context.clearRect(0, 0, document.getElementById("canvas").width, document.getElementById("canvas").height);
-    }
-}
-function renderBlocks(){
-    var ctx = myGameArea.context;
-	for(var l = 0; l < blocks.length; l++){
+        var myGameArea = {
+            start: function () {
+                document.getElementById("canvas").width = 700;
+                document.getElementById("canvas").height = 700;
+                this.context = document.getElementById("canvas").getContext("2d");
+                this.interval = setInterval(updateGameArea, 50);
+                window.addEventListener('keydown', function (e) {
+                    myGameArea.keys = (myGameArea.keys || []);
+                    myGameArea.keys[e.keyCode] = (e.type == "keydown");
+                })
+                window.addEventListener('keyup', function (e) {
+                    myGameArea.keys[e.keyCode] = (e.type == "keydown");
+                })
+                window.addEventListener('mousedown', function (e) {
+                    myGameArea.x = e.pageX;
+                    myGameArea.y = e.pageY;
 
-		var rowDraw = Math.floor(l / width);
-        var tileDraw = l % width;
-        if ((tileDraw - xpos + 3) * 100 <= 800 && (tileDraw - xpos + 3) * 100 >= -100 && (rowDraw - ypos + 3) * 100 <= 800 && (rowDraw - ypos + 3) * 100 >= -100) {
-            var imgs = new Image();
-            switch (blocks[l]) {
-                case 'out':
-                    imgs.src = 'Space Texture (Outside Filler).PNG';
-                    break;
-                case 'floor':
-                    imgs.src = 'Floor Texture.PNG';
-                    break;
-                case 'bwall':
-                    imgs.src = 'Wall Texture (Bottom).PNG';
-                    break;
-                case 'rwall':
-                    imgs.src = 'Wall Texture (Right).PNG';
-                    break;
-                case 'lwall':
-                    imgs.src = 'Wall Texture (Left).PNG';
-                    break;
-                case 'twall':
-                    imgs.src = 'Wall Texture (Top).PNG';
-                    break;
-                case 'tlc':
-                    imgs.src = 'Corner Wall Texture (Top Left).PNG';
-                    break;
-                case 'trc':
-                    imgs.src = 'Corner Wall Texture (Top Right).PNG';
-                    break;
-                case 'blc':
-                    imgs.src = 'Corner Wall Texture (Bottom Left).PNG';
-                    break;
-                case 'brc':
-                    imgs.src = 'Corner Wall Texture (Bottom Right).PNG';
-                    break;
-                case 'bric':
-                    imgs.src = 'Inside Corner Wall (Bottom Right).PNG';
-                    break;
-                case 'blic':
-                    imgs.src = 'Inside Corner Wall (Bottom Left).PNG';
-                    break;
-                case 'tric':
-                    imgs.src = 'Inside Corner Wall (Top Right).PNG';
-                    break;
-                case 'tlic':
-                    imgs.src = 'Inside Corner Wall (Top Left).PNG';
-                    break;
-                case 'dwh':
-                    imgs.src = 'Double Sided Wall (Horisontal).PNG';
-                    break;
-                case 'dwv':
-                    imgs.src = 'Double Sided Wall (Vertical).PNG';
-                    break;
-                case 'dwet':
-                    imgs.src = 'Double Wall End (Top).PNG';
-                    break;
-                case 'dwel':
-                    imgs.src = 'Double Wall End (Left).PNG';
-                    break;
-                case 'dwer':
-                    imgs.src = 'Double Wall End (Right).PNG';
-                    break;
-                case 'dweb':
-                    imgs.src = 'Double Wall End (Bottom).PNG';
-                    break;
-                case 'twb':
-                    imgs.src = 'Triple Wall Bottom.png';
-                    break;
-                case 'twt':
-                    imgs.src = 'Triple Wall Top.png';
-                    break;
-                case 'twr':
-                    imgs.src = 'Triple Wall Right.png';
-                    break;
-                case 'twl':
-                    imgs.src = 'Triple Wall Left.png';
-                    break;
-                case 'twot':
-                    imgs.src = 'Triple Wall Outside Top.png';
-                    break;
-                case 'twob':
-                    imgs.src = 'Triple Wall Outside Bottom.png';
-                    break;
-                case 'mbl':
-                    imgs.src = 'Medbay Bed Texture (Left).PNG';
-                    break;
-                case 'mbr':
-                    imgs.src = 'Medbay Bed Texture (Right).PNG';
-                    break;
-                case 'gl':
-                    imgs.src = 'Right Greenhouse Texture.PNG';
-                    break;
-                case 'gm':
-                    imgs.src = 'Center Greenhouse Texture.PNG';
-                    break;
-                case 'gr':
-                    imgs.src = 'Left Greenhouse Texture.PNG';
-                    break;
-                case 't':
-                    imgs.src = 'Cafeteria Table Texture.PNG';
-                    break;
-                case 'dwhw':
-                    imgs.src = 'Double Sided Wall Wiring (Horizontal).png';
-                    break;
-                case 'wtw':
-                    imgs.src = 'Wall Texture Wiring (Top).png';
-                    break;
-                case 'c':
-                    imgs.src = 'Storage Crate Texture.PNG';
-                    break;
-                case 'tb':
-                    imgs.src = 'Task Button.png';
-                    break;
-                case 'ep':
-                    imgs.src = 'Electrical Panel Floor Texture.PNG';
-                    break;
-                case 'com':
-                    imgs.src = 'Comms Task Texture.PNG';
-                    break;
-                case 'epf':
-                    imgs.src = 'Electrical Panel Floor Texture (Completed).PNG';
-                    break;
-                case 'comf':
-                    imgs.src = 'Comms Task Complete.png';
-                    break;
-                case 'mbt':
-                    imgs.src = 'Med Task.png';
-                    break;
-                case 'mbtf':
-                    imgs.src = 'Med Task Complete.png';
-                    break;
-                case 'gh':
-                    imgs.src = 'Farm Task.png';
-                    break;
-                case 'ghf':
-                    imgs.src = 'Greenhouse Task Complete.png';
-                    break;
-                case 'sto':
-                    imgs.src = 'Storage Task.png';
-                    break;
-                case 'stof':
-                    imgs.src = 'Storage Crate Texture.PNG';
-                    break;
-                case 'tsh':
-                    imgs.src = 'Trashcan.png';
-                    break;
-                case 'tshf':
-                    imgs.src = 'Trashcan Complete.png';
-                    break;
-                case 'gw':
-                    imgs.src = 'Green Wire.png';
-                    break;
-                case 'rw':
-                    imgs.src = 'Red Wire.png';
-                    break;
-                case 'yw':
-                    imgs.src = 'Yellow Wire.png';
-                    break;
-                case 'ept':
-                    imgs.src = 'Electrical Panel.png';
-                    break;
-                case 'ls':
-                    imgs.src = 'Comms Task Texture.PNG';
-                    break;
-                case 'lsf':
-                    imgs.src = 'Life Support Done.png';
-                    break;
-                case 'w':
-                    imgs.src = 'Weapons Task.png';
-                    break;
-                case 'wf':
-                    imgs.src = 'Weapons Task Complete.png';
-                    break;
-                case 'te':
-                    imgs.src = 'Torpedo Front.png';
-                    break;
-                case 'tm':
-                    imgs.src = 'Torpedo Middle.png';
-                    break;
+                })
+                window.addEventListener('mouseup', function (e) {
+                    myGameArea.x = false;
+                    myGameArea.y = false;
+                })
+            },
+            clear: function () {
+                this.context.clearRect(0, 0, document.getElementById("canvas").width, document.getElementById("canvas").height);
             }
-            ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
         }
-	}
-}
+        function renderBlocks() {
+            var ctx = myGameArea.context;
+            for (var l = 0; l < blocks.length; l++) {
 
-function left() {
-    if (walkable.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.125)]) && walkable.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.125)])) {
-
-        xpos += 0.125;
-        if (xpos >= width - 1) {
-            xpos = width - 1;
+                var rowDraw = Math.floor(l / width);
+                var tileDraw = l % width;
+                if ((tileDraw - xpos + 3) * 100 <= 800 && (tileDraw - xpos + 3) * 100 >= -100 && (rowDraw - ypos + 3) * 100 <= 800 && (rowDraw - ypos + 3) * 100 >= -100) {
+                    var imgs = new Image();
+                    switch (blocks[l]) {
+                        case 'out':
+                            imgs.src = 'Space Texture (Outside Filler).PNG';
+                            break;
+                        case 'floor':
+                            imgs.src = 'Floor Texture.PNG';
+                            break;
+                        case 'bwall':
+                            imgs.src = 'Wall Texture (Bottom).PNG';
+                            break;
+                        case 'rwall':
+                            imgs.src = 'Wall Texture (Right).PNG';
+                            break;
+                        case 'lwall':
+                            imgs.src = 'Wall Texture (Left).PNG';
+                            break;
+                        case 'twall':
+                            imgs.src = 'Wall Texture (Top).PNG';
+                            break;
+                        case 'tlc':
+                            imgs.src = 'Corner Wall Texture (Top Left).PNG';
+                            break;
+                        case 'trc':
+                            imgs.src = 'Corner Wall Texture (Top Right).PNG';
+                            break;
+                        case 'blc':
+                            imgs.src = 'Corner Wall Texture (Bottom Left).PNG';
+                            break;
+                        case 'brc':
+                            imgs.src = 'Corner Wall Texture (Bottom Right).PNG';
+                            break;
+                        case 'bric':
+                            imgs.src = 'Inside Corner Wall (Bottom Right).PNG';
+                            break;
+                        case 'blic':
+                            imgs.src = 'Inside Corner Wall (Bottom Left).PNG';
+                            break;
+                        case 'tric':
+                            imgs.src = 'Inside Corner Wall (Top Right).PNG';
+                            break;
+                        case 'tlic':
+                            imgs.src = 'Inside Corner Wall (Top Left).PNG';
+                            break;
+                        case 'dwh':
+                            imgs.src = 'Double Sided Wall (Horisontal).PNG';
+                            break;
+                        case 'dwv':
+                            imgs.src = 'Double Sided Wall (Vertical).PNG';
+                            break;
+                        case 'dwet':
+                            imgs.src = 'Double Wall End (Top).PNG';
+                            break;
+                        case 'dwel':
+                            imgs.src = 'Double Wall End (Left).PNG';
+                            break;
+                        case 'dwer':
+                            imgs.src = 'Double Wall End (Right).PNG';
+                            break;
+                        case 'dweb':
+                            imgs.src = 'Double Wall End (Bottom).PNG';
+                            break;
+                        case 'twb':
+                            imgs.src = 'Triple Wall Bottom.png';
+                            break;
+                        case 'twt':
+                            imgs.src = 'Triple Wall Top.png';
+                            break;
+                        case 'twr':
+                            imgs.src = 'Triple Wall Right.png';
+                            break;
+                        case 'twl':
+                            imgs.src = 'Triple Wall Left.png';
+                            break;
+                        case 'twot':
+                            imgs.src = 'Triple Wall Outside Top.png';
+                            break;
+                        case 'twob':
+                            imgs.src = 'Triple Wall Outside Bottom.png';
+                            break;
+                        case 'mbl':
+                            imgs.src = 'Medbay Bed Texture (Left).PNG';
+                            break;
+                        case 'mbr':
+                            imgs.src = 'Medbay Bed Texture (Right).PNG';
+                            break;
+                        case 'gl':
+                            imgs.src = 'Right Greenhouse Texture.PNG';
+                            break;
+                        case 'gm':
+                            imgs.src = 'Center Greenhouse Texture.PNG';
+                            break;
+                        case 'gr':
+                            imgs.src = 'Left Greenhouse Texture.PNG';
+                            break;
+                        case 't':
+                            imgs.src = 'Cafeteria Table Texture.PNG';
+                            break;
+                        case 'dwhw':
+                            imgs.src = 'Double Sided Wall Wiring (Horizontal).png';
+                            break;
+                        case 'wtw':
+                            imgs.src = 'Wall Texture Wiring (Top).png';
+                            break;
+                        case 'c':
+                            imgs.src = 'Storage Crate Texture.PNG';
+                            break;
+                        case 'tb':
+                            imgs.src = 'Task Button.png';
+                            break;
+                        case 'ep':
+                            imgs.src = 'Electrical Panel Floor Texture.PNG';
+                            break;
+                        case 'com':
+                            imgs.src = 'Comms Task Texture.PNG';
+                            break;
+                        case 'epf':
+                            imgs.src = 'Electrical Panel Floor Texture (Completed).PNG';
+                            break;
+                        case 'comf':
+                            imgs.src = 'Comms Task Complete.png';
+                            break;
+                        case 'mbt':
+                            imgs.src = 'Med Task.png';
+                            break;
+                        case 'mbtf':
+                            imgs.src = 'Med Task Complete.png';
+                            break;
+                        case 'gh':
+                            imgs.src = 'Farm Task.png';
+                            break;
+                        case 'ghf':
+                            imgs.src = 'Greenhouse Task Complete.png';
+                            break;
+                        case 'sto':
+                            imgs.src = 'Storage Task.png';
+                            break;
+                        case 'stof':
+                            imgs.src = 'Storage Crate Texture.PNG';
+                            break;
+                        case 'tsh':
+                            imgs.src = 'Trashcan.png';
+                            break;
+                        case 'tshf':
+                            imgs.src = 'Trashcan Complete.png';
+                            break;
+                        case 'gw':
+                            imgs.src = 'Green Wire.png';
+                            break;
+                        case 'rw':
+                            imgs.src = 'Red Wire.png';
+                            break;
+                        case 'yw':
+                            imgs.src = 'Yellow Wire.png';
+                            break;
+                        case 'ept':
+                            imgs.src = 'Electrical Panel.png';
+                            break;
+                        case 'ls':
+                            imgs.src = 'Comms Task Texture.PNG';
+                            break;
+                        case 'lsf':
+                            imgs.src = 'Life Support Done.png';
+                            break;
+                        case 'w':
+                            imgs.src = 'Weapons Task.png';
+                            break;
+                        case 'wf':
+                            imgs.src = 'Weapons Task Complete.png';
+                            break;
+                        case 'te':
+                            imgs.src = 'Torpedo Front.png';
+                            break;
+                        case 'tm':
+                            imgs.src = 'Torpedo Middle.png';
+                            break;
+                    }
+                    ctx.drawImage(imgs, (tileDraw - xpos + 3) * 100, (rowDraw - ypos + 3) * 100, 100, 100);
+                }
+            }
         }
-    }
-}
+
+        function left() {
+            if (walkable.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos + 0.125)]) && walkable.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos + 0.125)])) {
+
+                xpos += 0.125;
+                if (xpos >= width - 1) {
+                    xpos = width - 1;
+                }
+            }
+        }
         function right() {
             if (walkable.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos - 0.125)]) && walkable.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos - 0.125)])) {
 
@@ -760,16 +761,16 @@ function left() {
                     xpos = 0;
                 }
             }
-}
-function up(){
-    if (walkable.includes(blocks[(Math.floor(ypos - 0.125) * width) + Math.floor(xpos)]) && walkable.includes(blocks[(Math.floor(ypos - 0.125) * width) + Math.ceil(xpos)])) {
-
-        ypos -= 0.125;
-        if (ypos <= 0) {
-            ypos = 0;
         }
-    }
-}
+        function up() {
+            if (walkable.includes(blocks[(Math.floor(ypos - 0.125) * width) + Math.floor(xpos)]) && walkable.includes(blocks[(Math.floor(ypos - 0.125) * width) + Math.ceil(xpos)])) {
+
+                ypos -= 0.125;
+                if (ypos <= 0) {
+                    ypos = 0;
+                }
+            }
+        }
         function down() {
             if (walkable.includes(blocks[(Math.ceil(ypos + 0.125) * width) + Math.floor(xpos)]) && walkable.includes(blocks[(Math.ceil(ypos + 0.125) * width) + Math.ceil(xpos)])) {
 
@@ -781,7 +782,7 @@ function up(){
         }
 
         function updateGameArea() {
-    myGameArea.clear();
+            myGameArea.clear();
             if (screen == 0) {
                 var bImage = new Image();
                 bImage.src = 'Title Screen.png'
@@ -876,18 +877,27 @@ function up(){
 
                     renderBlocks();
                     if (myGameArea.keys && myGameArea.keys[32] && (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)]))) {
-                        if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)])) {
-                            blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] = blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] + 'f';
+                        screen = 3;
+                        arr = [];
+                        arr = [];
+                        for (var m = 0; m < 9; m++) {
+                            arr.push(Math.floor(Math.random() * 2));
                         }
-                        if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)])) {
-                            blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] + 'f';
-                        }
-                        if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)])) {
-                            blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] + 'f';
-                        }
-                        if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)])) {
-                            blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] + 'f';
-                        }
+                    }
+                    if (task == 'complete') {
+                           if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)])) {
+                               blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] = blocks[(Math.floor(ypos) * width) + Math.floor(xpos)] + 'f';
+                           }
+                           if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)])) {
+                               blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)] + 'f';
+                           }
+                           if (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)])) {
+                               blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)] + 'f';
+                           }
+                           if (tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)])) {
+                               blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] = blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)] + 'f';
+                           }
+                        task = 'incomplete';
                     }
                     var check = 0;
                     for (var cnf = 0; cnf < blocks.length; cnf++) {
@@ -926,9 +936,89 @@ function up(){
                 if (myGameArea.x && myGameArea.y && myGameArea.x > 505 && myGameArea.y > 619 && myGameArea.x < 631.5 && myGameArea.y < 674) {
                     screen = 0;
                 }
+            } else if (screen == 3) {
+                document.getElementById('player').style.opacity = 0;
+                for (var lq = 0; lq < arr.length; lq++) {
+                    if (arr[lq] == 1) {
+                        myGameArea.context.fillStyle = 'red';
+                    } else {
+                        myGameArea.context.fillStyle = 'grey';
+                    }
+                    myGameArea.context.fillRect(100 + (150 * (lq % 3)), 100 + (150 * (Math.floor(lq / 3))), 100, 100);
+                    if (myGameArea.x && myGameArea.y) {
+                        if (myGameArea.x > 100 && myGameArea.y > 100 && myGameArea.x < 200 && myGameArea.y < 200) {
+                            if (arr[0] == 0) {
+                                arr[0] = 1;
+                            } else {
+                                arr[0] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 250 && myGameArea.y > 100 && myGameArea.x < 350 && myGameArea.y < 200) {
+                            if (arr[1] == 0) {
+                                arr[1] = 1;
+                            } else {
+                                arr[1] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 400 && myGameArea.y > 100 && myGameArea.x < 500 && myGameArea.y < 200) {
+                            if (arr[2] == 0) {
+                                arr[2] = 1;
+                            } else {
+                                arr[2] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 100 && myGameArea.y > 250 && myGameArea.x < 200 && myGameArea.y < 350) {
+                            if (arr[3] == 0) {
+                                arr[3] = 1;
+                            } else {
+                                arr[3] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 250 && myGameArea.y > 250 && myGameArea.x < 350 && myGameArea.y < 350) {
+                            if (arr[4] == 0) {
+                                arr[4] = 1;
+                            } else {
+                                arr[4] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 400 && myGameArea.y > 250 && myGameArea.x < 500 && myGameArea.y < 350) {
+                            if (arr[5] == 0) {
+                                arr[5] = 1;
+                            } else {
+                                arr[5] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 100 && myGameArea.y > 400 && myGameArea.x < 200 && myGameArea.y < 500) {
+                            if (arr[6] == 0) {
+                                arr[6] = 1;
+                            } else {
+                                arr[6] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 250 && myGameArea.y > 400 && myGameArea.x < 350 && myGameArea.y < 500) {
+                            if (arr[7] == 0) {
+                                arr[7] = 1;
+                            } else {
+                                arr[7] = 0;
+                            }
+                        }
+                        if (myGameArea.x > 400 && myGameArea.y > 400 && myGameArea.x < 500 && myGameArea.y < 500) {
+                            if (arr[8] == 0) {
+                                arr[8] = 1;
+                            } else {
+                                arr[8] = 0;
+                            }
+                        }
+                        myGameArea.x = false;
+                        myGameArea.y = false;
+                    }
+                    if (!arr.includes(0)) {
+                        task = 'complete';
+                        screen = 1;
+                    }
+                }
             }
-        }
-    </script>
-    <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player"/></div><button onclick="openFullscreen()">Fullscreen</button>
+        }</script>
+    <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player" /></div><button onclick="openFullscreen()">Fullscreen</button>
 </body>
 </html>
