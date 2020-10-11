@@ -759,65 +759,6 @@
                 } else {
                     addDetail(5, 11, 'wf');
                 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             }
         }
 
@@ -911,9 +852,26 @@
                 window.addEventListener('mousedown', function (e) {
                     myGameArea.x = e.pageX;
                     myGameArea.y = e.pageY;
-
+                    myGameArea.click = true;
+                })
+                window.addEventListener('mousemove', function (e) {
+                    myGameArea.x = e.pageX;
+                    myGameArea.y = e.pageY;
                 })
                 window.addEventListener('mouseup', function (e) {
+                    myGameArea.x = false;
+                    myGameArea.y = false;
+                    myGameArea.click = false;
+                })
+                window.addEventListener('touchstart', function (e) {
+                    myGameArea.x = e.pageX;
+                    myGameArea.y = e.pageY;
+                })
+                window.addEventListener('touchmove', function (e) {
+                    myGameArea.x = e.touches[0].screenX;
+                    myGameArea.y = e.touches[0].screenY;
+                })
+                window.addEventListener('touchend', function (e) {
                     myGameArea.x = false;
                     myGameArea.y = false;
                 })
@@ -1160,7 +1118,7 @@
                     myGameArea.context.fillText(message, 0, 600)
                 }
                 document.getElementById('player').style.opacity = 0;
-                if (myGameArea.x && myGameArea.y && myGameArea.x > 286 && myGameArea.y > 286 && myGameArea.x < 413 && myGameArea.y < 413) {
+                if (myGameArea.x && myGameArea.y && myGameArea.x > 286 && myGameArea.y > 286 && myGameArea.x < 413 && myGameArea.y < 413 && myGameArea.click) {
                     mapnum = Math.floor(Math.random() * 3);
                     loadTiles();
                     screen = 1;
@@ -1179,7 +1137,7 @@
                     dx = new Date()
                     start = dx.getTime();
                 }
-                if (myGameArea.x && myGameArea.y && myGameArea.x > 204.5 && myGameArea.y > 440.5 && myGameArea.x < 495 && myGameArea.y < 514.5) {
+                if (myGameArea.x && myGameArea.y && myGameArea.x > 204.5 && myGameArea.y > 440.5 && myGameArea.x < 495 && myGameArea.y < 514.5 && myGameArea.click) {
                     screen = 2;
                     console.log(screen);
                 }
@@ -1213,16 +1171,16 @@
                     }
                 } else {
                     document.getElementById('player').style.opacity = 'inherit';
-                    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
+                    if ((myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) || (myGameArea.x && myGameArea.x < 200 && myGameArea.click)) {
                         right();
                     }
-                    if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
+                    if ((myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) || (myGameArea.x && myGameArea.x > 500 && myGameArea.click) ) {
                         left();
                     }
-                    if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
+                    if ((myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) || (myGameArea.y && myGameArea.y < 200 && myGameArea.click) ) {
                         up();
                     }
-                    if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
+                    if ((myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) || (myGameArea.y && myGameArea.y > 500 && myGameArea.click)) {
                         down();
                     }
 
@@ -1313,7 +1271,7 @@
                 bImage.src = 'How to play.png'
                 myGameArea.context.drawImage(bImage, 0, 0, 700, 700);
                 document.getElementById('player').style.opacity = 0;
-                if (myGameArea.x && myGameArea.y && myGameArea.x > 505 && myGameArea.y > 619 && myGameArea.x < 631.5 && myGameArea.y < 674) {
+                if (myGameArea.x && myGameArea.y && myGameArea.x > 505 && myGameArea.y > 619 && myGameArea.x < 631.5 && myGameArea.y < 674 && myGameArea.click) {
                     screen = 0;
                 }
             } else if (screen == 3) {
@@ -1327,63 +1285,63 @@
                         }
                         myGameArea.context.fillRect(100 + (150 * (lq % 3)), 100 + (150 * (Math.floor(lq / 3))), 100, 100);
                         if (myGameArea.x && myGameArea.y) {
-                            if (myGameArea.x > 100 && myGameArea.y > 100 && myGameArea.x < 200 && myGameArea.y < 200) {
+                            if (myGameArea.x > 100 && myGameArea.y > 100 && myGameArea.x < 200 && myGameArea.y < 200 && myGameArea.click) {
                                 if (arr[0] == 0) {
                                     arr[0] = 1;
                                 } else {
                                     arr[0] = 0;
                                 }
                             }
-                            if (myGameArea.x > 250 && myGameArea.y > 100 && myGameArea.x < 350 && myGameArea.y < 200) {
+                            if (myGameArea.x > 250 && myGameArea.y > 100 && myGameArea.x < 350 && myGameArea.y < 200 && myGameArea.click) {
                                 if (arr[1] == 0) {
                                     arr[1] = 1;
                                 } else {
                                     arr[1] = 0;
                                 }
                             }
-                            if (myGameArea.x > 400 && myGameArea.y > 100 && myGameArea.x < 500 && myGameArea.y < 200) {
+                            if (myGameArea.x > 400 && myGameArea.y > 100 && myGameArea.x < 500 && myGameArea.y < 200 && myGameArea.click) {
                                 if (arr[2] == 0) {
                                     arr[2] = 1;
                                 } else {
                                     arr[2] = 0;
                                 }
                             }
-                            if (myGameArea.x > 100 && myGameArea.y > 250 && myGameArea.x < 200 && myGameArea.y < 350) {
+                            if (myGameArea.x > 100 && myGameArea.y > 250 && myGameArea.x < 200 && myGameArea.y < 350 && myGameArea.click) {
                                 if (arr[3] == 0) {
                                     arr[3] = 1;
                                 } else {
                                     arr[3] = 0;
                                 }
                             }
-                            if (myGameArea.x > 250 && myGameArea.y > 250 && myGameArea.x < 350 && myGameArea.y < 350) {
+                            if (myGameArea.x > 250 && myGameArea.y > 250 && myGameArea.x < 350 && myGameArea.y < 350 && myGameArea.click) {
                                 if (arr[4] == 0) {
                                     arr[4] = 1;
                                 } else {
                                     arr[4] = 0;
                                 }
                             }
-                            if (myGameArea.x > 400 && myGameArea.y > 250 && myGameArea.x < 500 && myGameArea.y < 350) {
+                            if (myGameArea.x > 400 && myGameArea.y > 250 && myGameArea.x < 500 && myGameArea.y < 350 && myGameArea.click) {
                                 if (arr[5] == 0) {
                                     arr[5] = 1;
                                 } else {
                                     arr[5] = 0;
                                 }
                             }
-                            if (myGameArea.x > 100 && myGameArea.y > 400 && myGameArea.x < 200 && myGameArea.y < 500) {
+                            if (myGameArea.x > 100 && myGameArea.y > 400 && myGameArea.x < 200 && myGameArea.y < 500 && myGameArea.click) {
                                 if (arr[6] == 0) {
                                     arr[6] = 1;
                                 } else {
                                     arr[6] = 0;
                                 }
                             }
-                            if (myGameArea.x > 250 && myGameArea.y > 400 && myGameArea.x < 350 && myGameArea.y < 500) {
+                            if (myGameArea.x > 250 && myGameArea.y > 400 && myGameArea.x < 350 && myGameArea.y < 500 && myGameArea.click) {
                                 if (arr[7] == 0) {
                                     arr[7] = 1;
                                 } else {
                                     arr[7] = 0;
                                 }
                             }
-                            if (myGameArea.x > 400 && myGameArea.y > 400 && myGameArea.x < 500 && myGameArea.y < 500) {
+                            if (myGameArea.x > 400 && myGameArea.y > 400 && myGameArea.x < 500 && myGameArea.y < 500 && myGameArea.click) {
                                 if (arr[8] == 0) {
                                     arr[8] = 1;
                                 } else {
@@ -1392,6 +1350,7 @@
                             }
                             myGameArea.x = false;
                             myGameArea.y = false;
+                            myGameArea.click = false;
                         }
                         if (!arr.includes(0)) {
                             task = 'complete';
@@ -1407,7 +1366,7 @@
                         myGameArea.context.fillStyle = 'black';
                         myGameArea.context.fillText((m + 1) % 10, 130 + (150 * (m % 3)), 190 + (150 * (Math.floor(m / 3))));
 
-                        if (myGameArea.x && myGameArea.y) {
+                        if (myGameArea.x && myGameArea.y && myGameArea.click) {
                             if (myGameArea.x > 100 && myGameArea.y > 100 && myGameArea.x < 200 && myGameArea.y < 200) {
                                 pcodeattempt *= 10;
                                 pcodeattempt += 1;
@@ -1461,6 +1420,7 @@
 
                             myGameArea.x = false;
                             myGameArea.y = false;
+                            myGameArea.click = false;
                         }
                     }
                     myGameArea.context.fillStyle = 'black';
