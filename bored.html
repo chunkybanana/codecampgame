@@ -30,10 +30,10 @@
 <body onload="startGame()">
     <script>var walkable = ['floor', 'tb', 'ep', 'com', 'mbt', 'epf', 'comf', 'mbtf', 'gh', 'ghf', 'sto', 'stof', 'tsh', 'tshf', 'gw', 'rw', 'yw', 'ls', 'lsf', 'w', 'wf'];
         var tasks = ['tb', 'ep', 'com', 'mbt', 'gh', 'sto', 'tsh', 'ls', 'w'];
-        var pcode,pcodeattempt,kpsf;
+        var pcode, pcodeattempt, kpsf;
         var blocks = [];
         var screen = 0;
-        var start, message, mapnum, task,tasktype;
+        var start, message, mapnum, task, tasktype;
         var dx = new Date()
 
         var xpos = 17, ypos = 3, height = 32, width = 32, arr;
@@ -835,7 +835,7 @@
             this.stop = function () {
                 this.sound.pause();
             }
-        } 
+        }
         var myGameArea = {
             start: function () {
                 document.getElementById("canvas").width = 700;
@@ -1143,7 +1143,7 @@
                 }
             } else if (screen == 1) {
 
-                if (myGameArea.keys && (myGameArea.keys[109] || myGameArea.keys[77])) {
+                if (myGameArea.keys && (myGameArea.keys[109] || myGameArea.keys[77]) || (myGameArea.click && myGameArea.x < 600 && myGameArea.x > 500 && myGameArea.y > 600 && myGameArea.y < 700)) {
                     var map = new Image();
                     if (mapnum == 0) {
                         map.src = "map.png";
@@ -1174,10 +1174,10 @@
                     if ((myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) || (myGameArea.x && myGameArea.x < 200 && myGameArea.click)) {
                         right();
                     }
-                    if ((myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) || (myGameArea.x && myGameArea.x > 500 && myGameArea.click) ) {
+                    if ((myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) || (myGameArea.x && myGameArea.x > 500 && myGameArea.click)) {
                         left();
                     }
-                    if ((myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) || (myGameArea.y && myGameArea.y < 200 && myGameArea.click) ) {
+                    if ((myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) || (myGameArea.y && myGameArea.y < 200 && myGameArea.click)) {
                         up();
                     }
                     if ((myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) || (myGameArea.y && myGameArea.y > 500 && myGameArea.click)) {
@@ -1208,18 +1208,30 @@
                     }
 
                     renderBlocks();
-                    if (myGameArea.keys && myGameArea.keys[32] && (tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)]))) {
-                        screen = 3;
-                        tasktype = Math.floor(Math.random() * 2);
-                        if (tasktype == 0) {
-                            arr = [];
-                            for (var m = 0; m < 9; m++) {
-                                arr.push(Math.floor(Math.random() * 2));
+                    myGameArea.context.fillStyle = 'grey';
+                    myGameArea.context.fillRect(500, 600, 100, 100);
+                    myGameArea.context.fillStyle = 'black';
+                    myGameArea.context.font = '50px Arial';
+                    myGameArea.context.fillText('Map',500,665)
+                    if ((tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)]))) {
+                        myGameArea.context.fillStyle = 'grey';
+                        myGameArea.context.fillRect(600, 600, 100, 100);
+                        myGameArea.context.fillStyle = 'black';
+                        myGameArea.context.font = '70px Arial';
+                        myGameArea.context.fillText('Do', 600, 675)
+                        if ((myGameArea.keys && myGameArea.keys[32]) || (myGameArea.click && myGameArea.x > 600 && myGameArea.x < 700 && myGameArea.y > 600 && myGameArea.y < 700)) {
+                            screen = 3;
+                            tasktype = Math.floor(Math.random() * 2);
+                            if (tasktype == 0) {
+                                arr = [];
+                                for (var m = 0; m < 9; m++) {
+                                    arr.push(Math.floor(Math.random() * 2));
+                                }
+                            } else if (tasktype == 1) {
+                                pcode = Math.floor(Math.random() * 9000) + 1000;
+                                pcodeattempt = 0;
+                                kpsf = 0;
                             }
-                        } else if (tasktype == 1) {
-                            pcode = Math.floor(Math.random() * 9000) + 1000;
-                            pcodeattempt = 0;
-                            kpsf = 0;
                         }
                     }
                     if (task == 'complete') {
@@ -1440,8 +1452,7 @@
                     }
                 }
             }
-        }
-    </script>
+        }</script>
     <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player" /></div><button onclick="openFullscreen()">Fullscreen</button>
 </body>
 </html>
