@@ -1184,21 +1184,21 @@
                         down();
                     }
 
-                    if (myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) {
+                    if ((myGameArea.keys && (myGameArea.keys[37] || myGameArea.keys[97] || myGameArea.keys[65])) || (myGameArea.x && myGameArea.x < 200 && myGameArea.click)) {
                         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(4).gif') {
                             document.getElementById('player').src = 'New Piskel (4).gif';
                         }
-                    } else if (myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) {
+                    } else if ((myGameArea.keys && (myGameArea.keys[39] || myGameArea.keys[100] || myGameArea.keys[68])) || (myGameArea.x && myGameArea.x > 500 && myGameArea.click)) {
                         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(5).gif') {
                             document.getElementById('player').src = 'New Piskel (5).gif';
 
                         }
-                    } else if (myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) {
+                    } else if ((myGameArea.keys && (myGameArea.keys[38] || myGameArea.keys[119] || myGameArea.keys[87])) || (myGameArea.y && myGameArea.y < 200 && myGameArea.click)) {
                         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(7).gif') {
                             document.getElementById('player').src = 'New Piskel (7).gif';
 
                         }
-                    } else if (myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) {
+                    } else if ((myGameArea.keys && (myGameArea.keys[40] || myGameArea.keys[115] || myGameArea.keys[83])) || (myGameArea.y && myGameArea.y > 500 && myGameArea.click)) {
                         if (document.getElementById('player').src != 'https://doomsdaygame.surge.sh/New%20Piskel%20(6).gif') {
                             document.getElementById('player').src = 'New Piskel (6).gif';
 
@@ -1218,7 +1218,7 @@
                         myGameArea.context.fillRect(600, 600, 100, 100);
                         myGameArea.context.fillStyle = 'black';
                         myGameArea.context.font = '70px Arial';
-                        myGameArea.context.fillText('Do', 600, 675)
+                        myGameArea.context.fillText('Do', 600, 665)
                         if ((myGameArea.keys && myGameArea.keys[32]) || (myGameArea.click && myGameArea.x > 600 && myGameArea.x < 700 && myGameArea.y > 600 && myGameArea.y < 700)) {
                             screen = 3;
                             tasktype = Math.floor(Math.random() * 2);
