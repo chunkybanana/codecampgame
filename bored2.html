@@ -10,11 +10,13 @@
             image-rendering: -webkit-crisp-edges;
             image-rendering: pixelated;
             image-rendering: crisp-edges;
+            width: 350px;
+            height: 350px;
         }
 
         img {
-            transform: translate(-482px,-226px);
-            width: 260px;
+            transform: translate(-241px,-113px);
+            width: 130px;
             image-rendering: -moz-crisp-edges;
             image-rendering: -webkit-crisp-edges;
             image-rendering: pixelated;
@@ -850,13 +852,13 @@
                     myGameArea.keys[e.keyCode] = (e.type == "keydown");
                 })
                 window.addEventListener('mousedown', function (e) {
-                    myGameArea.x = e.pageX;
-                    myGameArea.y = e.pageY;
+                    myGameArea.x = e.pageX*2;
+                    myGameArea.y = e.pageY*2;
                     myGameArea.click = true;
                 })
                 window.addEventListener('mousemove', function (e) {
-                    myGameArea.x = e.pageX;
-                    myGameArea.y = e.pageY;
+                    myGameArea.x = e.pageX*2;
+                    myGameArea.y = e.pageY*2;
                 })
                 window.addEventListener('mouseup', function (e) {
                     myGameArea.x = false;
@@ -864,12 +866,12 @@
                     myGameArea.click = false;
                 })
                 window.addEventListener('touchstart', function (e) {
-                    myGameArea.x = e.pageX;
-                    myGameArea.y = e.pageY;
+                    myGameArea.x = e.pageX*2;
+                    myGameArea.y = e.pageY*2;
                 })
                 window.addEventListener('touchmove', function (e) {
-                    myGameArea.x = e.touches[0].screenX;
-                    myGameArea.y = e.touches[0].screenY;
+                    myGameArea.x = e.touches[0].screenX*2;
+                    myGameArea.y = e.touches[0].screenY*2;
                 })
                 window.addEventListener('touchend', function (e) {
                     myGameArea.x = false;
@@ -1453,6 +1455,6 @@
                 }
             }
         }</script>
-    <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player" /></div><a href="bored2.html">Phone version</a>
+    <div id="game"><canvas id="canvas"></canvas><img src="New Piskel (4).gif" id="player" /></div><a href="bored.html">Normal version</a>
 </body>
 </html>
