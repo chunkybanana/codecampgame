@@ -1208,17 +1208,13 @@
                     }
 
                     renderBlocks();
-                    myGameArea.context.fillStyle = 'grey';
-                    myGameArea.context.fillRect(500, 600, 100, 100);
-                    myGameArea.context.fillStyle = 'black';
-                    myGameArea.context.font = '50px Arial';
-                    myGameArea.context.fillText('Map',500,665)
+                    var mapimg = new Image();
+                    mapimg.src = 'mapbutton.png';
+                    myGameArea.context.drawImage(mapimg, 500, 600, 100, 100);
                     if ((tasks.includes(blocks[(Math.floor(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.floor(xpos)]) || tasks.includes(blocks[(Math.floor(ypos) * width) + Math.ceil(xpos)]) || tasks.includes(blocks[(Math.ceil(ypos) * width) + Math.ceil(xpos)]))) {
-                        myGameArea.context.fillStyle = 'grey';
-                        myGameArea.context.fillRect(600, 600, 100, 100);
-                        myGameArea.context.fillStyle = 'black';
-                        myGameArea.context.font = '70px Arial';
-                        myGameArea.context.fillText('Do', 600, 665)
+                        mapimg = new Image();
+                        mapimg.src = 'taskbutton.png';
+                        myGameArea.context.drawImage(mapimg, 600, 600, 100, 100);
                         if ((myGameArea.keys && myGameArea.keys[32]) || (myGameArea.click && myGameArea.x > 600 && myGameArea.x < 700 && myGameArea.y > 600 && myGameArea.y < 700)) {
                             screen = 3;
                             tasktype = Math.floor(Math.random() * 2);
